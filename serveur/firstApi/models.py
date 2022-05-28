@@ -246,3 +246,5 @@ class RessourceSerializer(serializers.ModelSerializer):
   
 
 # ____________________________________________________________________________
+
+
