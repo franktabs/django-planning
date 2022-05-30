@@ -1,6 +1,16 @@
 from django.contrib import admin
 
-from firstApi.models import *
+from .model.batiment import Batiment
+from .model.classe import Classe
+from .model.faculte import Faculte
+from .model.etudiant import Etudiant
+from .model.salle import Salle
+from .model.enseignant import Enseignant
+from .model.type_ressource import TypeRessource
+from .model.ressource import Ressource
+from .model.type_salle import TypeSalle
+
+
 
 # Register your models here.
 
