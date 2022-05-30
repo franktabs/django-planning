@@ -2,9 +2,9 @@ from re import TEMPLATE
 from .settings import *
 import dj_database_url
 
-DEBUG = False
+DEBUG = True
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 SECRET_KEY = "d!27&+0*fw30)6=0w6x)5(6(a0y_oah+47kf-d6gjr82e^0jm("
 
