@@ -18,7 +18,7 @@ from .model.enseignant import *
 from .model.type_ressource import *
 from .model.ressource import *
 from .model.type_salle import *
-from .model.utilisateur import *
+from .model.utilisateur import Utilisateur, UtilisateurSerializer
 
 # Create your views here.
 # @api_view(['GET', 'POST'])
