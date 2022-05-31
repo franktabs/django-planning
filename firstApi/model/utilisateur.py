@@ -34,6 +34,9 @@ class Enseignant(models.Model):
         
     class Meta:
         db_table = "enseignants"
+    
+    def __str__(self):
+        return self.nom
 
 
 class EnseignantSerializer(serializers.ModelSerializer):

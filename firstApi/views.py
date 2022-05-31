@@ -51,6 +51,7 @@ from .model.departement import *
 class UtilisateurViewSet(ABC, ModelViewSet):
     serializer_class = ""
     queryset = ""
+    mymodel = ""
     
     def create(self, req:HttpRequest, *args, **kwargs):
         utilisateur_test = self.serializer_class(data=req.data)
@@ -60,6 +61,9 @@ class UtilisateurViewSet(ABC, ModelViewSet):
         utilisateur = self.serializer_class(data=datas)
         utilisateur.is_valid()
         utilisateur.save()
+        utilisateur = self.mymodel.objects.filter(email=req.data['email'])
+        utilisateur_test = self.serializer_class(utilisateur, many=True)
+        
         # print('\n\n')
         # print(check_password(req.data['password'], datas['password']))
         # etudiant.save()
@@ -111,6 +115,7 @@ class DepartementViewSet(ModelViewSet):
 class EnseignantViewSet(UtilisateurViewSet):
     serializer_class = EnseignantSerializer
     queryset = Enseignant.objects.all()
+    mymodel = Enseignant
     
     def create(self, req: HttpRequest, *args, **kwargs):
         return super().create(req, *args, **kwargs)
@@ -134,9 +139,9 @@ def utilisateurView(req:HttpRequest):
             if(check_password(req.data['password'], enseignant['password'] )):
                 enseignant = EnseignantSerializer(enseignants, many=True)
                 return Response(enseignant.data)
-        return Response({'errors': 'password is incorrect'}, 400)
+        return Response({'password is incorrect'}, 400)
         
-    return Response({'errors': 'user does\'nt exist'}, 400)
+    return Response({'user does\'nt exist'}, 400)
 
 @api_view(['GET'])
 def batiments_sallesView(req:HttpRequest):

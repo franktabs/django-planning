@@ -20,7 +20,7 @@ class Plage(models.Model):
     
     
     def __str__(self):
-        return self.code
+        return self.jour
     
     class Meta:
         db_table = 'plages'
