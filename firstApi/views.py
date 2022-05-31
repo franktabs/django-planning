@@ -119,17 +119,19 @@ class EnseignantViewSet(UtilisateurViewSet):
 @api_view(['POST'])
 def utilisateurView(req:HttpRequest):
     UtilisateurSerializer(data=req.data).is_valid(raise_exception=True)
-    etudiants = Etudiant.objects.filter(email=req.POST['email'])
+    print('\n\n',req.data['email'])
+    print('\n\n')
+    etudiants = Etudiant.objects.filter(email=req.data['email'])
     if(etudiants):
         for etudiant in etudiants.values():
-            if(check_password(req.POST['password'], etudiant['password'] )):
+            if(check_password(req.data['password'], etudiant['password'] )):
                 etudiant = EtudiantSerializer(etudiants, many=True)
                 return Response(etudiant.data)
         return Response({'errors': 'password is incorrect'}, 400)
-    enseignants = Enseignant.objects.filter(email=req.POST['email'])
+    enseignants = Enseignant.objects.filter(email=req.data['email'])
     if(enseignants):
         for enseignant in enseignants.values():
-            if(check_password(req.POST['password'], enseignant['password'] )):
+            if(check_password(req.data['password'], enseignant['password'] )):
                 enseignant = EnseignantSerializer(enseignants, many=True)
                 return Response(enseignant.data)
         return Response({'errors': 'password is incorrect'}, 400)

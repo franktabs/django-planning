@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-mqc41$rt1lzt2*qgij+ki1am)x*jcr(3*op7q3%+h0#3v9ae2p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.8.100', '192.168.8.101', 'localhost']
 
 
 # Application definition
@@ -151,7 +151,10 @@ CORS_ALLOWED_ORIGINS = [
     'https://planning-ap.herokuapp.com',
     "http://localhost:8080",
     "http://127.0.0.1:9000",
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "http://192.168.8.101:3000",
+    "http://192.168.8.100:3000"
+    
 ]
 
 CORS_ALLOW_METHODS = [
