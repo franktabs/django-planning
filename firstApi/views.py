@@ -80,7 +80,7 @@ class SalleViewSet(ModelViewSet):
 class EtudiantViewSet(UtilisateurViewSet):
     serializer_class = EtudiantSerializer
     queryset = Etudiant.objects.all()
-    
+    mymodel = Etudiant
     def create(self, req: HttpRequest, *args, **kwargs):
         return super().create(req, *args, **kwargs)
 
