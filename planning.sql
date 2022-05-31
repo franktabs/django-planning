@@ -300,9 +300,9 @@ DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
--- Table `plannings`.`cours_programmmes`
+-- Table `plannings`.`cours_programmes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `plannings`.`cours_programmmes` (
+CREATE TABLE IF NOT EXISTS `plannings`.`cours_programmes` (
   `plages_id` INT UNSIGNED NOT NULL,
   `salles_id` INT UNSIGNED NOT NULL,
   `ues_id` INT UNSIGNED NULL,
