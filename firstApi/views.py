@@ -19,6 +19,7 @@ from .model.type_ressource import *
 from .model.ressource import *
 from .model.type_salle import *
 from .model.utilisateur import Utilisateur, UtilisateurSerializer
+from .model.departement import *
 
 # Create your views here.
 # @api_view(['GET', 'POST'])
