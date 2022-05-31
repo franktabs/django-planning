@@ -22,7 +22,7 @@ class UtilisateurSerializer(serializers.ModelSerializer):
 
 class Enseignant(models.Model):
     roles = (('admin', 'Administrateur'), ('simple', 'Simple'), ('chef_departement', 'Chef de Departement'))
-    matricule = models.CharField(unique=True, max_length=45, null=True)
+    matricule = models.CharField(unique=True, max_length=45, null=True, blank=True)
     nom = models.CharField(max_length=255, null=False)
     email = models.EmailField(null=False, unique=True, max_length=45)
     password = models.CharField(null=False, max_length=255, name="password", blank=False)
