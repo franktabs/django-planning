@@ -20,7 +20,7 @@ class Plage(models.Model):
     
     
     def __str__(self):
-        return self.jour
+        return  '{} {}'.format(self.jour, self.periode) 
     
     class Meta:
         db_table = 'plages'

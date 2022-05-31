@@ -58,7 +58,7 @@ class UtilisateurViewSet(ABC, ModelViewSet):
         utilisateur_test.is_valid(raise_exception=True)
         datas = deepcopy(req.data)
         datas['password']= make_password(datas['password'])
-        utilisateur = self.serializer_class(data=datas)
+        utilisateur = self.serializer_class(data=datas, many=True)
         utilisateur.is_valid()
         utilisateur.save()
         utilisateur = self.mymodel.objects.filter(email=req.data['email'])
