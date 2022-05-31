@@ -8,7 +8,7 @@ from programmation.model.ue import Ue, UeSerializer
 class Plage(models.Model):
     jours = (('LUNDI', 'LUNDI'), ('MARDI', 'MARDI'), ('MERCREDI', 'MERCREDI'), ('JEUDI', 'JEUDI'), ('VENDREDI', 'VENDREDI'), ('SAMEDI', 'SAMEDI'), ('DIMANCHE', 'DIMANCHE'))
     heures = (('7h00 - 9h55', '7h00 - 9h55'), ('10h05 - 12h55', '10h05 - 12h55' ), ('13h05 - 15h55', '13h05 - 15h55'), ('16h05 - 18h55', '16h05 - 18h55'), ('19h05 - 21h55', '19h05 - 21h55'))
-    code = models.PositiveIntegerField(null=True, blank=True)
+    # code = models.PositiveIntegerField(null=True, blank=True)
     jour = models.CharField(max_length=45, null=False, choices=jours)
     periode = models.CharField(max_length=45, null=False, choices=heures)
     
@@ -17,6 +17,10 @@ class Plage(models.Model):
     ues = models.ManyToManyField(Ue, through='CoursProgramme', related_name='plages')
     salles= models.ManyToManyField(Salle, through='CoursProgramme', related_name='plages')
     classes = models.ManyToManyField(Classe, through='CoursProgramme', related_name='plages')
+    
+    
+    def __str__(self):
+        return self.code
     
     class Meta:
         db_table = 'plages'

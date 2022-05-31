@@ -11,6 +11,9 @@ class Ressource(models.Model):
     facultes = models.ForeignKey(Faculte, on_delete=models.PROTECT)
     class Meta:
         db_table = 'ressources'
+    
+    def __str__(self):
+        return self.code
         
 class RessourceSerializer(serializers.ModelSerializer):
     type_ressources = TypeRessourceSerializer(read_only=True)

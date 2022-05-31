@@ -10,6 +10,9 @@ class TypeRessource(models.Model):
     class Meta:
         db_table = 'type_ressources'
         
+    def __str__(self):
+        return self.code
+        
 class TypeRessourceSerializer(serializers.ModelSerializer):
     classes = ClasseSerializer(read_only=True)
 

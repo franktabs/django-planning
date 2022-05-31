@@ -8,6 +8,9 @@ class Departement(models.Model):
     facultes = models.ForeignKey(Faculte, on_delete=models.PROTECT)
     class Meta:
         db_table = 'departements'
+        
+    def __str__(self):
+        return self.nom
 
 class DepartementSerializer(serializers.ModelSerializer):
     facultes = FaculteSerializer()

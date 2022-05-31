@@ -17,7 +17,9 @@ class Salle(models.Model):
     class Meta:
         db_table = 'salles'
         unique_together = (('code', 'batiments_id'))
-
+        
+    def __str__(self):
+        return self.code
 
 class SalleSerializer(serializers.ModelSerializer):
     batiments = BatimentSerializer(read_only=True)

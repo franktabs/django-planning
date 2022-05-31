@@ -9,6 +9,9 @@ class Groupe(models.Model):
     class Meta:
         db_table = 'groupes'
     
+    def __str__(self):
+        return self.code
+    
 class GroupeSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -27,6 +30,9 @@ class Classe(models.Model):
     
     class Meta:
         db_table = 'classes'
+    
+    def __str__(self):
+        return self.code
 
 
 class ClasseSerializer(serializers.ModelSerializer):
@@ -46,6 +52,7 @@ class ClassesGroupe(models.Model):
     
     class Meta:
         db_table = "classes_groupes"
+    
 
 class ClassesGroupeSerializer(serializers.ModelSerializer):
     groupes = GroupeSerializer()

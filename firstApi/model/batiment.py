@@ -10,6 +10,8 @@ class Batiment(models.Model):
     class Meta:
         db_table = 'batiments'
 
+    def __str__(self):
+        return self.nom
 
 class BatimentSerializer(serializers.ModelSerializer):
     facultes = FaculteSerializer()

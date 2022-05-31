@@ -11,6 +11,9 @@ class Ue(models.Model):
     
     class Meta:
         db_table = 'ues'
+    
+    def __str__(self):
+        return self.code
         
 
 class UeSerializer(serializers.ModelSerializer):

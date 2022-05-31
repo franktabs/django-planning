@@ -8,6 +8,9 @@ class TypeSalle(models.Model):
 
     class Meta:
         db_table = "type_salles"
+    
+    def __str__(self):
+        return self.code
 
 
 class TypeSalleSerializer(serializers.ModelSerializer):

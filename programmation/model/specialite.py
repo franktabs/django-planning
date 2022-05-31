@@ -8,6 +8,9 @@ class Specialite(models.Model):
     
     class Meta:
         db_table = 'specialites'
+    
+    def __str__(self):
+        return self.code
 
 class SpecialiteSerializer(serializers.ModelSerializer):
     classes = ClasseSerializer()
