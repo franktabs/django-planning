@@ -147,7 +147,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 CORS_ALLOWED_ORIGINS = [
     'https://planning-ap.herokuapp.com',
     "http://localhost:8080",
