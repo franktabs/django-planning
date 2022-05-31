@@ -9,7 +9,7 @@ from programmation.model.plage import Plage, PlageSerializer
 class Ue(models.Model):
     code = models.CharField(max_length=45, null=False, unique=True)
     intitule = models.CharField(max_length=255)
-    credit =models.PositiveSmallIntegerField(max_length=1, null=False)
+    credit =models.PositiveSmallIntegerField(null=False)
     # classes = models.ManyToManyField(Classe, through='Enseigne', related_name='ues')
     # enseignants = models.ManyToManyField(Enseignant, through='Enseigne', related_name='ues')
     
