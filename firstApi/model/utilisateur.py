@@ -36,7 +36,7 @@ class Enseignant(models.Model):
         db_table = "enseignants"
     
     def __str__(self):
-        return self.nom
+        return self.noms
 
 
 class EnseignantSerializer(serializers.ModelSerializer):
