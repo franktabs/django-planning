@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from firstApi.model.departement import Departement
+
 from .model.batiment import Batiment
 from .model.classe import Classe
 from .model.faculte import Faculte
@@ -23,6 +25,9 @@ admin.site.register(Batiment)
 admin.site.register(Ressource)
 admin.site.register(TypeRessource)
 admin.site.register(Enseignant)
+admin.site.register(Departement)
+
+
 
 
 
