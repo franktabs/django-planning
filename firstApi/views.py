@@ -58,7 +58,7 @@ class UtilisateurViewSet(ABC, ModelViewSet):
         utilisateur_test.is_valid(raise_exception=True)
         datas = deepcopy(req.data)
         datas['password']= make_password(datas['password'])
-        utilisateur = self.serializer_class(data=datas, many=True)
+        utilisateur = self.serializer_class(data=datas)
         utilisateur.is_valid()
         utilisateur.save()
         utilisateur = self.mymodel.objects.filter(email=req.data['email'])
@@ -66,12 +66,12 @@ class UtilisateurViewSet(ABC, ModelViewSet):
         
         # print('\n\n')
         # print(check_password(req.data['password'], datas['password']))
-        # etudiant.save()
-        value = {}
-        for k in utilisateur_test.data:
-            if k != 'password':
-                value[k]=utilisateur_test.data[k]
-        return Response(value, status=201)
+        # utilisateur_test.save()
+        # value = {}
+        # for k in utilisateur_test.data:
+        #     if k != 'password':
+        #         value[k]=utilisateur_test.data[k]
+        return Response(utilisateur_test.data, status=201)
 
 class SalleViewSet(ModelViewSet):
     serializer_class = SalleSerializer
