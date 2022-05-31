@@ -22,10 +22,10 @@ class Ue(models.Model):
         
 
 class UeSerializer(serializers.ModelSerializer):
-    enseignants= EnseignantSerializer()
-    plages = PlageSerializer()
-    salles= SalleSerializer()
-    classes = ClasseSerializer()
+    enseignants= EnseignantSerializer(read_only=True)
+    plages = PlageSerializer(read_only=True)
+    salles= SalleSerializer(read_only=True)
+    classes = ClasseSerializer(read_only=True)
     
     class Meta:
         model = Ue

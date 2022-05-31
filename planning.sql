@@ -16,7 +16,7 @@ CREATE SCHEMA IF NOT EXISTS `plannings` DEFAULT CHARACTER SET utf8mb4 COLLATE ut
 -- -----------------------------------------------------
 -- Schema plannings
 -- -----------------------------------------------------
-USE plannings
+
 -- -----------------------------------------------------
 -- Table `plannings`.`facultes`
 -- -----------------------------------------------------
@@ -160,7 +160,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `plannings`.`groupes` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(45) NOT NULL,
-  `nom groupe` VARCHAR(45) NULL,
+  `nom` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -179,9 +179,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `plannings`.`groupes_classes`
+-- Table `plannings`.`classes_groupes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `plannings`.`groupes_classes` (
+CREATE TABLE IF NOT EXISTS `plannings`.`classes_groupes` (
   `groupes_id` INT UNSIGNED NULL,
   `classes_id` INT UNSIGNED NULL,
   INDEX `fk_groupes_has_niveaus_niveaus1_idx` (`classes_id` ASC) VISIBLE,
@@ -300,9 +300,9 @@ DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
--- Table `plannings`.`programmes`
+-- Table `plannings`.`cours_programmmes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `plannings`.`programmes` (
+CREATE TABLE IF NOT EXISTS `plannings`.`cours_programmmes` (
   `plages_id` INT UNSIGNED NOT NULL,
   `salles_id` INT UNSIGNED NOT NULL,
   `ues_id` INT UNSIGNED NULL,
