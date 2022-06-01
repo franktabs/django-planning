@@ -23,7 +23,7 @@ class UtilisateurSerializer(serializers.ModelSerializer):
 class Enseignant(models.Model):
     roles = (('admin', 'Administrateur'), ('simple', 'Simple'), ('chef_departement', 'Chef de Departement'))
     matricule = models.CharField(max_length=45, null=True, blank=True, unique=True)
-    noms = models.CharField(max_length=255, null=False)
+    noms = models.CharField(max_length=45, null=False)
     email = models.EmailField(null=False, unique=True, max_length=45)
     password = models.CharField(null=False, max_length=255, name="password", blank=False)
     role = models.CharField(max_length = 45, default='simple', null=False, choices=roles)
@@ -43,8 +43,17 @@ class EnseignantSerializer(serializers.ModelSerializer):
     departements = DepartementSerializer(read_only=True)
 
     def validate_matricule(self, value):
+        message = []
+        erreur = False
+        matricule = Etudiant.objects.filter(matricule=value)
+        if matricule:
+            erreur = True
+            message.append('Sorry!! Matricule already exist')
         if(len(value)<7 and len(value)>=1):
-            raise serializers.ValidationError('min 7 caractères')
+            erreur = True
+            message.append('min 7 caractères')
+        if erreur:
+            raise serializers.ValidationError(message)
         return value
     
     def validate_email(self, value):

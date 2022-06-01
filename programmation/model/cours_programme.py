@@ -2,7 +2,7 @@ from django.db import models
 from rest_framework import serializers
 
 from firstApi.model.salle import Salle, SalleSerializer
-from programmation.model.plage import Plage
+from programmation.model.plage import Plage, PlageSerializer
 from .ue import Ue, UeSerializer
 from firstApi.model.enseignant import Enseignant, EnseignantSerializer
 from firstApi.model.classe import Classe, ClasseSerializer
@@ -26,6 +26,7 @@ class CoursProgrammeSerializer(serializers.ModelSerializer):
     ues = UeSerializer()
     enseignants = EnseignantSerializer()
     salles= SalleSerializer()
+    # plages = PlageSerializer()
     class Meta:
         model = CoursProgramme
         fields = '__all__'

@@ -11,9 +11,7 @@ class Plage(models.Model):
     # code = models.PositiveIntegerField(null=True, blank=True)
     jour = models.CharField(max_length=45, null=False, choices=jours)
     periode = models.CharField(max_length=45, null=False, choices=heures)
-    
-    
-    enseignants= models.ManyToManyField(Enseignant, through='CoursProgramme', related_name='enseignants')
+    enseignants= models.ManyToManyField(Enseignant, through='CoursProgramme', related_name='plages')
     ues = models.ManyToManyField(Ue, through='CoursProgramme', related_name='plages')
     salles= models.ManyToManyField(Salle, through='CoursProgramme', related_name='plages')
     classes = models.ManyToManyField(Classe, through='CoursProgramme', related_name='plages')
@@ -28,10 +26,10 @@ class Plage(models.Model):
         
 
 class PlageSerializer(serializers.ModelSerializer):
-    enseignants= EnseignantSerializer(read_only=True)
-    ues = UeSerializer(read_only=True)
-    salles= SalleSerializer(read_only=True)
-    classes = ClasseSerializer(read_only=True)
+    enseignants= EnseignantSerializer(many=True)
+    ues = UeSerializer(many=True)
+    salles= SalleSerializer(many=True)
+    classes = ClasseSerializer(many=True)
     
     class Meta:
         model = Plage
