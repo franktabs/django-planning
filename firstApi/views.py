@@ -9,17 +9,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.hashers import make_password, check_password
 from firstApi.models import *
-from .model.batiment import *
-from .model.classe import *
-from .model.faculte import *
-from .model.etudiant import *
-from .model.salle import *
-from .model.enseignant import *
-from .model.type_ressource import *
-from .model.ressource import *
-from .model.type_salle import *
-from .model.utilisateur import Utilisateur, UtilisateurSerializer
-from .model.departement import *
+
 
 # Create your views here.
 # @api_view(['GET', 'POST'])
@@ -104,9 +94,7 @@ class TypeSalleViewSet(ModelViewSet):
     serializer_class = TypeSalleSerializer
     queryset = TypeSalle.objects.all()
     
-class ClasseViewSet(ModelViewSet):
-    serializer_class = ClasseSerializer
-    queryset = Classe.objects.all()
+
 
 class DepartementViewSet(ModelViewSet):
     serializer_class = DepartementSerializer

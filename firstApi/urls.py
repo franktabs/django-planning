@@ -12,7 +12,6 @@ router.register('salle/?', SalleViewSet)
 router.register('typeSalle/?', TypeSalleViewSet)
 router.register('typeRessource/?', TypeRessourceViewSet)
 router.register('faculte/?', FaculteViewSet)
-router.register('classe/?', ClasseViewSet)
 router.register('batiment/?', BatimentViewSet)
 router.register('enseignant/?', EnseignantViewSet)
 
