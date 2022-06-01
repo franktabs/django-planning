@@ -1,5 +1,9 @@
 
 from firstApi.model.departement import *
+from firstApi.model.salle import Salle, SalleSerializer
+from firstApi.model.utilisateur import Enseignant, EnseignantSerializer
+from programmation.model.plage import Plage, PlageSerializer
+from programmation.model.ue import Ue, UeSerializer
 
 class Groupe(models.Model):
     code = models.CharField(max_length = 45, unique=True, null=False)
@@ -28,6 +32,12 @@ class Classe(models.Model):
     departements = models.ForeignKey(Departement, on_delete=models.PROTECT)
     groupes = models.ManyToManyField(Groupe, through="ClassesGroupe", related_name='classes')
     
+    enseignants= models.ManyToManyField(Enseignant, through='CoursProgramme', related_name='plages')
+    ues = models.ManyToManyField(Ue, through='CoursProgramme', related_name='plages')
+    salles= models.ManyToManyField(Salle, through='CoursProgramme', related_name='plages')
+    plages = models.ManyToManyField(Plage, through='CoursProgramme', related_name='plages')
+    
+    
     class Meta:
         db_table = 'classes'
     
@@ -38,6 +48,10 @@ class Classe(models.Model):
 class ClasseSerializer(serializers.ModelSerializer):
     departements = DepartementSerializer(read_only=True)
 
+    enseignants= EnseignantSerializer(many=True)
+    ues = UeSerializer(many=True)
+    salles= SalleSerializer(many=True)
+    plages = PlageSerializer(many=True)
     class Meta:
         model = Classe
         fields = "__all__"
