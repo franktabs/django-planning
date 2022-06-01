@@ -5,6 +5,7 @@ from .model.ue import *
 from .model.groupe import *
 from .model.plage import *
 from .model.specialite import *
+from .model.cours_programme import *
 
 class UeViewSet(ModelViewSet):
     serializer_class = UeSerializer
@@ -22,3 +23,6 @@ class SpecialiteViewSet(ModelViewSet):
     serializer_class = SpecialiteSerializer
     queryset = Specialite.objects.all()
 
+class CoursProgrammeViewSet(ModelViewSet):
+    serializer_class = CoursProgrammeSerializer
+    queryset = CoursProgramme.objects.all()

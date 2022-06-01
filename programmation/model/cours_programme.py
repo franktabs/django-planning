@@ -14,6 +14,9 @@ class CoursProgramme(models.Model):
     salles = models.ForeignKey(Salle, on_delete=models.SET_NULL, null=True)
     plages= models.ForeignKey(Plage, on_delete=models.SET_NULL, null=True)
     
+    def __str__(self):
+        return f'{self.ues} {self.enseignants}' 
+    
     class Meta:
         db_table = 'cours_programmes'
         unique_together = (('ues_id', 'classes_id'), ('salles_id', 'plages_id'))

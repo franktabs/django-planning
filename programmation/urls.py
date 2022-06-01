@@ -9,6 +9,8 @@ route.register('ue/?', UeViewSet)
 route.register('specialite/?', SpecialiteViewSet)
 route.register('plage/?', PlageViewSet)
 route.register('groupe/?', GroupeViewSet)
+route.register('cours-programme/?', CoursProgrammeViewSet)
+
 
 urlpatterns=[
     path('', include(route.urls))

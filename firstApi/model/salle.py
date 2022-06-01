@@ -1,6 +1,6 @@
 from django.db import models
 from rest_framework import serializers
-from .batiment import *
+from .batiment import Batiment, BatimentSerializer
 from .type_salle import *
 
 
