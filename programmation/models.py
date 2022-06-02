@@ -100,7 +100,7 @@ class Classe(models.Model):
 
 
 class ClasseSerializer(serializers.ModelSerializer):
-    departements = DepartementSerializer(read_only=True)
+    # departements = DepartementSerializer(read_only=True)
 
     enseignants= EnseignantSerializer(many=True)
     ues = UeSerializer(many=True)
@@ -109,7 +109,7 @@ class ClasseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Classe
         fields = "__all__"
-        depth = 1
+        depth = 2
         
 
 # ________________________________________________________________________________________________________
