@@ -85,7 +85,6 @@ class Classe(models.Model):
     effectif = models.IntegerField()
     departements = models.ForeignKey(Departement, on_delete=models.PROTECT)
     groupes = models.ManyToManyField(Groupe, through="ClassesGroupe", related_name='classes')
-    
     enseignants= models.ManyToManyField(Enseignant, through='CoursProgramme', related_name='classes')
     ues = models.ManyToManyField(Ue, through='CoursProgramme', related_name='classes')
     salles= models.ManyToManyField(Salle, through='CoursProgramme', related_name='classes')
@@ -100,8 +99,7 @@ class Classe(models.Model):
 
 
 class ClasseSerializer(serializers.ModelSerializer):
-    departements = DepartementSerializer(read_only=True)
-
+    # departements = DepartementSerializer(read_only=True)
     enseignants= EnseignantSerializer(many=True)
     ues = UeSerializer(many=True)
     salles= SalleSerializer(many=True)
