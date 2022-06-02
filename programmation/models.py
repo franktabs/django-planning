@@ -75,7 +75,7 @@ class Classe(models.Model):
 
 
 class ClasseSerializer(serializers.ModelSerializer):
-    departements = DepartementSerializer(read_only=True, many = False)
+    # departements = DepartementSerializer(read_only=True, many = False)
     groupes = GroupeSerializer(many=True)
     
     
