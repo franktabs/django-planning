@@ -30,6 +30,7 @@ class CoursProgrammeViewSet(ModelViewSet):
         tab = []
         for i in datas:
             myjson = {}
+            myjson['id'] = i['id']
             myjson['codeClasse']= i['classes']['code']
             myjson['cours'] = [
                 {
