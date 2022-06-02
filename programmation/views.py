@@ -36,7 +36,7 @@ class CoursProgrammeViewSet(ModelViewSet):
                 {
                     'plage': i['plages']['id'] - 2,
                     'ue': i['ues']['code'],
-                    'enseignant': i['enseignatns']['noms'],
+                    'enseignant': i['enseignants']['noms'],
                     'salle': i['salles']['code'],
                 }
             ]
