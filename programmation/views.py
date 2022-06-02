@@ -32,6 +32,7 @@ class CoursProgrammeViewSet(ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         cours_programme = CoursProgramme.objects.filter(classes_id=kwargs['pk'])
         serializer = self.serializer_class(cours_programme, many=True)
+        
         datas = serializer.data
         tab = []
         classes = []
@@ -56,6 +57,7 @@ class CoursProgrammeViewSet(ModelViewSet):
                     
                     myjson = {}
                     myjson['id'] = i['id']
+                    myjson['classes'] = i['classes']['id']
                     myjson['codeClasse'] = i['classes']['code']
                     classes.append(i['classes']['code'])
                     myjson['cours'] = [
