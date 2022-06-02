@@ -75,14 +75,12 @@ class Classe(models.Model):
 
 
 class ClasseSerializer(serializers.ModelSerializer):
-    # departements = DepartementSerializer(read_only=True, many = False)
     groupes = GroupeSerializer(many=True)
     
     
     class Meta:
         model = Classe
         fields = "__all__"
-        depth = 1
         
 
 # ________________________________________________________________________________________________________
