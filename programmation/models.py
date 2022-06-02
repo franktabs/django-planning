@@ -6,27 +6,6 @@ from firstApi.models import Departement, DepartementSerializer, Enseignant, Ense
 
 # _______________________________________________________________________
 
-
-class Ue(models.Model):
-    code = models.CharField(max_length=45, null=False, unique=True)
-    intitule = models.CharField(max_length=255)
-    credit =models.PositiveSmallIntegerField(null=False)
-    # classes = models.ManyToManyField(Classe, through='Enseigne', related_name='ues')
-    # enseignants = models.ManyToManyField(Enseignant, through='Enseigne', related_name='ues')
-    
-    
-    class Meta:
-        db_table = 'ues'
-    
-    def __str__(self):
-        return self.code
-        
-
-class UeSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Ue
-        fields = "__all__"
 # _______________________________________________________________________
 
 class Groupe(models.Model):
@@ -85,10 +64,7 @@ class Classe(models.Model):
     effectif = models.IntegerField()
     departements = models.ForeignKey(Departement, on_delete=models.PROTECT)
     groupes = models.ManyToManyField(Groupe, through="ClassesGroupe", related_name='classes')
-    enseignants= models.ManyToManyField(Enseignant, through='CoursProgramme', related_name='classes')
-    ues = models.ManyToManyField(Ue, through='CoursProgramme', related_name='classes')
-    salles= models.ManyToManyField(Salle, through='CoursProgramme', related_name='classes')
-    plages = models.ManyToManyField('Plage', through='CoursProgramme', related_name='classes')
+
     
     
     class Meta:
@@ -100,14 +76,13 @@ class Classe(models.Model):
 
 class ClasseSerializer(serializers.ModelSerializer):
     # departements = DepartementSerializer(read_only=True)
-    enseignants= EnseignantSerializer(many=True)
-    ues = UeSerializer(many=True)
-    salles= SalleSerializer(many=True)
-    plages = PlageSerializer(many=True)
+    groupes = GroupeSerializer(many=True)
+    
+    
     class Meta:
         model = Classe
         fields = "__all__"
-        depth = 0
+        depth = 1
         
 
 # ________________________________________________________________________________________________________
@@ -153,6 +128,35 @@ class SpecialiteSerializer(serializers.ModelSerializer):
         
 # _______________________________________________________________________
 
+class Ue(models.Model):
+    code = models.CharField(max_length=45, null=False, unique=True)
+    intitule = models.CharField(max_length=255)
+    credit =models.PositiveSmallIntegerField(null=False)
+    # classes = models.ManyToManyField(Classe, through='Enseigne', related_name='ues')
+    # enseignants = models.ManyToManyField(Enseignant, through='Enseigne', related_name='ues')
+    
+    enseignants= models.ManyToManyField(Enseignant, through='CoursProgramme', related_name='ues')
+    classes = models.ManyToManyField(Classe, through='CoursProgramme', related_name='ues')
+    salles= models.ManyToManyField(Salle, through='CoursProgramme', related_name='ues')
+    plages = models.ManyToManyField('Plage', through='CoursProgramme', related_name='ues')
+    
+    class Meta:
+        db_table = 'ues'
+    
+    def __str__(self):
+        return self.code
+        
+
+class UeSerializer(serializers.ModelSerializer):
+    
+    enseignants= EnseignantSerializer(many=True)
+    classes = ClasseSerializer(many=True)
+    salles= SalleSerializer(many=True)
+    plages = PlageSerializer(many=True)
+    
+    class Meta:
+        model = Ue
+        fields = "__all__"
 # _______________________________________________________________________
 
 class CoursProgramme(models.Model):
