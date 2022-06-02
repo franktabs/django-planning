@@ -109,6 +109,8 @@ class ClasseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Classe
         fields = "__all__"
+        depth = 1
+        
 
 # ________________________________________________________________________________________________________
 
@@ -128,6 +130,7 @@ class ClassesGroupeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClassesGroupe
         fields = '__all__'
+        depth = 1
         
 
 # ___________________________________________________________________________
@@ -148,6 +151,8 @@ class SpecialiteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Specialite
         fields = '__all__'
+        depth = 1
+        
 # _______________________________________________________________________
 
 # _______________________________________________________________________
@@ -175,6 +180,7 @@ class CoursProgrammeSerializer(serializers.ModelSerializer):
     class Meta:
         model = CoursProgramme
         fields = '__all__'
+        depth = 1
 
 # _______________________________________________________________________
 
@@ -195,6 +201,8 @@ class EnseignesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enseignes
         fields = '__all__'
+        depth = 1
+        
 
 # _______________________________________________________________________
 
