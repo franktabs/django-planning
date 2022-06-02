@@ -67,7 +67,7 @@ class CoursProgrammeViewSet(ModelViewSet):
                         }
                     ]
                     tab.append(myjson)
-        return Response(['Executer'])
+        return Response(tab, 200)
 
     def list(self, request, *args, **kwargs):
         serializer = self.serializer_class(self.queryset, many=True)
