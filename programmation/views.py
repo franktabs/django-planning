@@ -38,9 +38,9 @@ class CoursProgrammeViewSet(ModelViewSet):
 
             if i['classes']:
                 k = -1
+                existes = False
                 for j in classes:
                     k += 1
-                    existes = False
                     if i['classes']['code'] == j:
                         existes = True
                         tab[k]['cours'].append({
@@ -56,6 +56,7 @@ class CoursProgrammeViewSet(ModelViewSet):
                     myjson = {}
                     myjson['id'] = i['id']
                     myjson['codeClasse'] = i['classes']['code']
+                    classes.append(i['classes']['code'])
                     myjson['cours'] = [
                         {
                             'plage': i['plages']['id'] - 2,
