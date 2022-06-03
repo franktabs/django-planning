@@ -22,7 +22,6 @@ class SpecialiteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Specialite
         fields = '__all__'
-        depth = 1
 
 # _______________________________________________________________________
 
@@ -123,7 +122,6 @@ class ClasseGroupeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClasseGroupe
         fields = '__all__'
-        depth = 1
 
 
 # ___________________________________________________________________________
@@ -220,7 +218,6 @@ class EnseigneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enseigne
         fields = '__all__'
-        depth = 1
 
 
 # _______________________________________________________________________
