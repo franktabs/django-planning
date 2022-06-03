@@ -96,7 +96,7 @@ class Classe(models.Model):
 
 
 class ClasseSerializer(serializers.ModelSerializer):
-    specialites = SpecialiteSerializer()
+    specialites = SpecialiteSerializer(many=True)
     groupes = GroupeSerializer(many=True)
     class Meta:
         model = Classe
