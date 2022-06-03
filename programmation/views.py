@@ -175,7 +175,7 @@ def salle_cours(req: HttpRequest):
 def salle_cours_id(req: HttpRequest, *args, **kwargs):
     
     cours_programme = CoursProgramme.objects.filter(
-            classes_id=kwargs['id'])
+            salles_id=kwargs['id'])
     serializer = CoursProgrammeSerializer(cours_programme, many=True)
     datas = serializer.data
     tab = []
