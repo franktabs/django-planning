@@ -230,15 +230,25 @@ def enseignant_cours(req:HttpRequest):
         if i['enseignants']:
             k = -1
             existes = False
+            plage = ""
+            salle = ""
+            classe = ""
+            if i['plages']:
+                plage = i['plages']['id']-2
+            if i['salles']:
+                salle = i['salles']['code']
+            if i['classes']:
+                classe = i['classes']['code']
             for j in enseignants:
                 k += 1
                 if i['enseignants']['noms'] == j:
                     existes = True
+                    
                     tab[k]['cours'].append({
-                        'plage': i['plages']['id'] - 2,
+                        'plage': plage,
                         'ue': i['ues']['code'],
-                        'salle': i['salles']['code'],
-                        'classe': i['classes']['code'],
+                        'salle': salle,
+                        'classe': classe,
                     })
                     break
 
@@ -251,10 +261,10 @@ def enseignant_cours(req:HttpRequest):
                 enseignants.append(i['enseignants']['noms'])
                 myjson['cours'] = [
                     {
-                        'plage': i['plages']['id'] - 2,
+                        'plage': plage,
                         'ue': i['ues']['code'],
-                        'salle': i['salles']['code'],
-                        'classe': i['classes']['code'],
+                        'salle': salle,
+                        'classe': classe,
                     }
                 ]
                 tab.append(myjson)
@@ -275,15 +285,26 @@ def enseignant_cours_id(req:HttpRequest, *args, **kwargs):
         if i['enseignants']:
             k = -1
             existes = False
+            
+            plage = ""
+            salle = ""
+            classe = ""
+            if i['plages']:
+                plage = i['plages']['id']-2
+            if i['salles']:
+                salle = i['salles']['code']
+            if i['classes']:
+                classe = i['classes']['code']
+            
             for j in enseignants:
                 k += 1
                 if i['enseignants']['noms'] == j:
                     existes = True
                     tab[k]['cours'].append({
-                        'plage': i['plages']['id'] - 2,
+                        'plage': plage,
                         'ue': i['ues']['code'],
-                        'salle': i['salles']['code'],
-                        'classe': i['classes']['code'],
+                        'salle': salle,
+                        'classe': classe,
                     })
                     break
 
@@ -296,10 +317,10 @@ def enseignant_cours_id(req:HttpRequest, *args, **kwargs):
                 enseignants.append(i['enseignants']['noms'])
                 myjson['cours'] = [
                     {
-                        'plage': i['plages']['id'] - 2,
+                        'plage': plage,
                         'ue': i['ues']['code'],
-                        'salle': i['salles']['code'],
-                        'classe': i['classes']['code'],
+                        'salle': salle,
+                        'classe': classe,
                     }
                 ]
                 tab.append(myjson)
