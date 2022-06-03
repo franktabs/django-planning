@@ -1,6 +1,8 @@
+from django.http import HttpRequest
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 # Create your views here.
 from .models import *
 
@@ -120,3 +122,7 @@ class ClasseViewSet(ModelViewSet):
 class EnseigneViewSet(ModelViewSet):
     serializer_class = EnseigneSerializer
     queryset = Enseigne.objects.all()
+
+@api_view(['GET'])
+def salle_ue(req:HttpRequest):
+    pass

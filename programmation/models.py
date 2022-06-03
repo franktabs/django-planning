@@ -160,9 +160,9 @@ class UeSerializer(serializers.ModelSerializer):
 class CoursProgramme(models.Model):
     ues = models.ForeignKey(Ue, on_delete=models.CASCADE)
     enseignants = models.ForeignKey(Enseignant, on_delete=models.CASCADE) 
-    classes = models.ForeignKey(Classe, on_delete=models.SET_NULL, null=True)
-    salles = models.ForeignKey(Salle, on_delete=models.SET_NULL, null=True)
-    plages= models.ForeignKey(Plage, on_delete=models.SET_NULL, null=True)
+    classes = models.ForeignKey(Classe, on_delete=models.SET_NULL, null=True, blank=True)
+    salles = models.ForeignKey(Salle, on_delete=models.SET_NULL, null=True, blank=True)
+    plages= models.ForeignKey(Plage, on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):
         return f'{self.ues} {self.enseignants}' 
