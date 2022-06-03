@@ -268,9 +268,11 @@ def enum_classe_cours(datas):
 def salle_cours(req: HttpRequest):
     coursprogramme = CoursProgramme.objects.all()
     serializer = CoursProgrammeSerializer(coursprogramme, many=True)
-    datas = serializer.data
-    tab = enum_salle_cours(datas)
-    return Response(tab, 200)
+    
+    return Response(serializer.data)
+    # datas = serializer.data
+    # tab = enum_salle_cours(datas)
+    # return Response(tab, 200)
 
 
 @api_view(['GET'])

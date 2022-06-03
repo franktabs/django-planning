@@ -191,7 +191,7 @@ class CoursProgramme(models.Model):
 
 
 class CoursProgrammeSerializer(serializers.ModelSerializer):
-    classes = ClasseSerializer()
+    classes = ClasseSerializer(many=True)
     ues = UeSerializer()
     enseignants = EnseignantSerializer()
     salles = SalleSerializer()
