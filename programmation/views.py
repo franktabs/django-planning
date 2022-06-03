@@ -202,6 +202,7 @@ def salle_cours_id(req: HttpRequest, *args, **kwargs):
 
                 myjson = {}
                 myjson['id'] = i['id']
+                myjson['salles'] = i['salles']['id']
                 myjson['codeSalle'] = i['salles']['code']
                 salles.append(i['salles']['code'])
                 myjson['cours'] = [
