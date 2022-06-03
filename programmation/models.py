@@ -171,8 +171,7 @@ class CoursProgramme(models.Model):
     # isProg = ((1, 'OUI'), (2, 'NON'))
     ues = models.ForeignKey(Ue, on_delete=models.CASCADE)
     enseignants = models.ForeignKey(Enseignant, on_delete=models.CASCADE)
-    classes = models.ForeignKey(
-        Classe, on_delete=models.CASCADE)
+    classes = models.ForeignKey(Classe, on_delete=models.CASCADE)
     salles = models.ForeignKey(
         Salle, on_delete=models.SET_NULL, null=True, blank=True)
     plages = models.ForeignKey(
@@ -189,7 +188,7 @@ class CoursProgramme(models.Model):
 
 
 class CoursProgrammeSerializer(serializers.ModelSerializer):
-    classes = ClasseSerializer(many=True)
+    classes = ClasseSerializer()
     ues = UeSerializer()
     enseignants = EnseignantSerializer()
     salles = SalleSerializer()
