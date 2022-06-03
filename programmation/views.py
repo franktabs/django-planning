@@ -11,6 +11,9 @@ class UeViewSet(ModelViewSet):
     serializer_class = UeSerializer
     queryset = Ue.objects.all()
 
+class ClasseGroupeViewSet(ModelViewSet):
+    serializer_class = ClasseGroupeSerializer
+    queryset = ClasseGroupe.objects.all()
 
 class GroupeViewSet(ModelViewSet):
     serializer_class = GroupeSerializer

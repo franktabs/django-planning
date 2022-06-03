@@ -88,7 +88,7 @@ class Classe(models.Model):
     departements = models.ForeignKey(Departement, on_delete=models.PROTECT)
     specialites = models.ForeignKey(Specialite, on_delete=models.SET_NULL, null=True, blank=True)
     groupes = models.ManyToManyField(
-        Groupe, through="ClassesGroupe", related_name='classes')    
+        Groupe, through="ClasseGroupe", related_name='classes')    
     class Meta:
         db_table = 'classes'
 
@@ -108,7 +108,7 @@ class ClasseSerializer(serializers.ModelSerializer):
 
 # _________________________________________________________________________________________________________
 
-class ClassesGroupe(models.Model):
+class ClasseGroupe(models.Model):
     groupes = models.ForeignKey(Groupe, on_delete=models.CASCADE)
     classes = models.ForeignKey(Classe, on_delete=models.CASCADE)
 
@@ -116,12 +116,12 @@ class ClassesGroupe(models.Model):
         db_table = "classes_groupes"
 
 
-class ClassesGroupeSerializer(serializers.ModelSerializer):
+class ClasseGroupeSerializer(serializers.ModelSerializer):
     groupes = GroupeSerializer()
     classes = ClasseSerializer()
 
     class Meta:
-        model = ClassesGroupe
+        model = ClasseGroupe
         fields = '__all__'
         depth = 1
 
