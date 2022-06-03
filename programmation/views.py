@@ -247,13 +247,13 @@ def enseignant_cours(req:HttpRequest):
                 myjson = {}
                 myjson['id'] = i['id']
                 myjson['enseignants'] = i['enseignants']['id']
-                myjson['codeEnseignant'] = i['enseignants']['code']
+                myjson['codeEnseignant'] = i['enseignants']['noms']
                 enseignants.append(i['enseignants']['code'])
                 myjson['cours'] = [
                     {
                         'plage': i['plages']['id'] - 2,
                         'ue': i['ues']['code'],
-                        'salle': i['salles']['noms'],
+                        'salle': i['salles']['code'],
                         'classe': i['classes']['code'],
                     }
                 ]
@@ -292,13 +292,13 @@ def enseignant_cours_id(req:HttpRequest, *args, **kwargs):
                 myjson = {}
                 myjson['id'] = i['id']
                 myjson['enseignants'] = i['enseignants']['id']
-                myjson['codeEnseignant'] = i['enseignants']['code']
+                myjson['codeEnseignant'] = i['enseignants']['noms']
                 enseignants.append(i['enseignants']['code'])
                 myjson['cours'] = [
                     {
                         'plage': i['plages']['id'] - 2,
                         'ue': i['ues']['code'],
-                        'salle': i['salles']['noms'],
+                        'salle': i['salles']['code'],
                         'classe': i['classes']['code'],
                     }
                 ]
