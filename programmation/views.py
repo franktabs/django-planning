@@ -324,3 +324,5 @@ def enseignant_cours_id(req:HttpRequest, *args, **kwargs):
                     }
                 ]
                 tab.append(myjson)
+    return Response(tab, 200)
+    
