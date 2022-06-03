@@ -18,4 +18,6 @@ urlpatterns=[
     path('', include(route.urls)),
     path('salle-cours', salle_cours),
     path('salle-cours/<int:id>', salle_cours_id),
+    path('enseignant-cours', enseignant_cours),
+    path('enseignant-cours/<int:id>', enseignant_cours_id),
 ]

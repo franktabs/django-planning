@@ -216,3 +216,90 @@ def salle_cours_id(req: HttpRequest, *args, **kwargs):
                 tab.append(myjson)
 
     return Response(tab, 200)
+
+@api_view(['GET'])
+def enseignant_cours(req:HttpRequest):
+    coursprogramme = CoursProgramme.objects.all()
+    serializer = CoursProgrammeSerializer(coursprogramme, many=True)
+    datas = serializer.data
+    tab = []
+    enseignants = []
+
+    for i in datas:
+
+        if i['enseignants']:
+            k = -1
+            existes = False
+            for j in enseignants:
+                k += 1
+                if i['enseignants']['code'] == j:
+                    existes = True
+                    tab[k]['cours'].append({
+                        'plage': i['plages']['id'] - 2,
+                        'ue': i['ues']['code'],
+                        'salle': i['salles']['noms'],
+                        'classe': i['classes']['code'],
+                    })
+                    break
+
+            if not existes:
+
+                myjson = {}
+                myjson['id'] = i['id']
+                myjson['enseignants'] = i['enseignants']['id']
+                myjson['codeEnseignant'] = i['enseignants']['code']
+                enseignants.append(i['enseignants']['code'])
+                myjson['cours'] = [
+                    {
+                        'plage': i['plages']['id'] - 2,
+                        'ue': i['ues']['code'],
+                        'salle': i['salles']['noms'],
+                        'classe': i['classes']['code'],
+                    }
+                ]
+                tab.append(myjson)
+
+    return Response(tab, 200)
+
+@api_view(['GET'])
+def enseignant_cours_id(req:HttpRequest, *args, **kwargs):
+    coursprogramme = CoursProgramme.objects.filter(
+        enseignants_id=kwargs['id'])
+    serializer = CoursProgrammeSerializer(coursprogramme, many=True)
+    datas = serializer.data
+    tab = []
+    enseignants = []
+
+    for i in datas:
+
+        if i['enseignants']:
+            k = -1
+            existes = False
+            for j in enseignants:
+                k += 1
+                if i['enseignants']['code'] == j:
+                    existes = True
+                    tab[k]['cours'].append({
+                        'plage': i['plages']['id'] - 2,
+                        'ue': i['ues']['code'],
+                        'salle': i['salles']['noms'],
+                        'classe': i['classes']['code'],
+                    })
+                    break
+
+            if not existes:
+
+                myjson = {}
+                myjson['id'] = i['id']
+                myjson['enseignants'] = i['enseignants']['id']
+                myjson['codeEnseignant'] = i['enseignants']['code']
+                enseignants.append(i['enseignants']['code'])
+                myjson['cours'] = [
+                    {
+                        'plage': i['plages']['id'] - 2,
+                        'ue': i['ues']['code'],
+                        'salle': i['salles']['noms'],
+                        'classe': i['classes']['code'],
+                    }
+                ]
+                tab.append(myjson)
