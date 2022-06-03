@@ -230,9 +230,9 @@ def enseignant_cours(req:HttpRequest):
         if i['enseignants']:
             k = -1
             existes = False
-            plage = ""
-            salle = ""
-            classe = ""
+            plage = None
+            salle = None
+            classe = None
             if i['plages']:
                 plage = i['plages']['id']-2
             if i['salles']:
@@ -286,9 +286,9 @@ def enseignant_cours_id(req:HttpRequest, *args, **kwargs):
             k = -1
             existes = False
             
-            plage = ""
-            salle = ""
-            classe = ""
+            plage = None
+            salle = None
+            classe = None
             if i['plages']:
                 plage = i['plages']['id']-2
             if i['salles']:
