@@ -173,9 +173,9 @@ def salle_cours(req: HttpRequest):
 
 @api_view(['GET'])
 def salle_cours_id(req: HttpRequest, *args, **kwargs):
-    
+
     cours_programme = CoursProgramme.objects.filter(
-            salles_id=kwargs['id'])
+        salles_id=kwargs['id'])
     serializer = CoursProgrammeSerializer(cours_programme, many=True)
     datas = serializer.data
     tab = []
@@ -216,5 +216,3 @@ def salle_cours_id(req: HttpRequest, *args, **kwargs):
                 tab.append(myjson)
 
     return Response(tab, 200)
-    
-    
