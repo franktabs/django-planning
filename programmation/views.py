@@ -232,7 +232,7 @@ def enseignant_cours(req:HttpRequest):
             existes = False
             for j in enseignants:
                 k += 1
-                if i['enseignants']['code'] == j:
+                if i['enseignants']['noms'] == j:
                     existes = True
                     tab[k]['cours'].append({
                         'plage': i['plages']['id'] - 2,
@@ -277,7 +277,7 @@ def enseignant_cours_id(req:HttpRequest, *args, **kwargs):
             existes = False
             for j in enseignants:
                 k += 1
-                if i['enseignants']['code'] == j:
+                if i['enseignants']['noms'] == j:
                     existes = True
                     tab[k]['cours'].append({
                         'plage': i['plages']['id'] - 2,

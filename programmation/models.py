@@ -6,6 +6,24 @@ from firstApi.models import Departement, DepartementSerializer, Enseignant, Ense
 
 # _______________________________________________________________________
 
+class Specialite(models.Model):
+    code = models.CharField(null=False, unique=True, max_length=45)
+    nom = models.CharField(max_length=45)
+
+    class Meta:
+        db_table = 'specialites'
+
+    def __str__(self):
+        return self.code
+
+
+class SpecialiteSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Specialite
+        fields = '__all__'
+        depth = 1
+
 # _______________________________________________________________________
 
 
@@ -71,6 +89,8 @@ class Classe(models.Model):
     groupes = models.ManyToManyField(
         Groupe, through="ClassesGroupe", related_name='classes')
 
+    specialites = models.ForeignKey(Specialite, on_delete=models.SET_NULL, null=True, blank=True)
+    
     class Meta:
         db_table = 'classes'
 
@@ -80,7 +100,7 @@ class Classe(models.Model):
 
 class ClasseSerializer(serializers.ModelSerializer):
     groupes = GroupeSerializer(many=True)
-
+    specialites = SpecialiteSerializer(many=True)
     class Meta:
         model = Classe
         fields = "__all__"
@@ -109,26 +129,6 @@ class ClassesGroupeSerializer(serializers.ModelSerializer):
 
 
 # ___________________________________________________________________________
-
-class Specialite(models.Model):
-    code = models.CharField(null=False, unique=True, max_length=45)
-    nom = models.CharField(max_length=45)
-    classes = models.ForeignKey(Classe, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'specialites'
-
-    def __str__(self):
-        return self.code
-
-
-class SpecialiteSerializer(serializers.ModelSerializer):
-    classes = ClasseSerializer()
-
-    class Meta:
-        model = Specialite
-        fields = '__all__'
-        depth = 1
 
 # _______________________________________________________________________
 
