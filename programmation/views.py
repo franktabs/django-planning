@@ -269,6 +269,7 @@ def salle_cours(req: HttpRequest):
     coursprogramme = CoursProgramme.objects.all()
     serializer = CoursProgrammeSerializer(coursprogramme, many=True)
     
+    
     return Response(serializer.data)
     # datas = serializer.data
     # tab = enum_salle_cours(datas)
