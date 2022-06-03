@@ -9,7 +9,7 @@ from firstApi.models import Departement, DepartementSerializer, Enseignant, Ense
 class Specialite(models.Model):
     code = models.CharField(null=False, unique=True, max_length=45)
     nom = models.CharField(max_length=45)
-
+    
     class Meta:
         db_table = 'specialites'
 
@@ -89,7 +89,7 @@ class Classe(models.Model):
     groupes = models.ManyToManyField(
         Groupe, through="ClassesGroupe", related_name='classes')
 
-    specialites = models.ForeignKey(Specialite, on_delete=models.SET_NULL, null=True, blank=True)
+    # specialites = models.ForeignKey(Specialite, on_delete=models.SET_NULL, null=True, blank=True)
     
     class Meta:
         db_table = 'classes'
@@ -100,7 +100,7 @@ class Classe(models.Model):
 
 class ClasseSerializer(serializers.ModelSerializer):
     groupes = GroupeSerializer(many=True)
-    specialites = SpecialiteSerializer(many=True)
+    # specialites = SpecialiteSerializer(many=True)
     class Meta:
         model = Classe
         fields = "__all__"
