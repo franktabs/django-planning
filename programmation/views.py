@@ -237,7 +237,7 @@ def enseignant_cours(req:HttpRequest):
                     tab[k]['cours'].append({
                         'plage': i['plages']['id'] - 2,
                         'ue': i['ues']['code'],
-                        'salle': i['salles']['noms'],
+                        'salle': i['salles']['code'],
                         'classe': i['classes']['code'],
                     })
                     break
@@ -282,7 +282,7 @@ def enseignant_cours_id(req:HttpRequest, *args, **kwargs):
                     tab[k]['cours'].append({
                         'plage': i['plages']['id'] - 2,
                         'ue': i['ues']['code'],
-                        'salle': i['salles']['noms'],
+                        'salle': i['salles']['code'],
                         'classe': i['classes']['code'],
                     })
                     break
