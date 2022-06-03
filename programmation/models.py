@@ -96,8 +96,8 @@ class Classe(models.Model):
 
 
 class ClasseSerializer(serializers.ModelSerializer):
-    specialites = SpecialiteSerializer(many=True)
-    groupes = GroupeSerializer(many=True)
+    specialites = SpecialiteSerializer()
+    groupes = GroupeSerializer()
     class Meta:
         model = Classe
         fields = "__all__"
