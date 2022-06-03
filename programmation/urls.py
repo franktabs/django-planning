@@ -8,8 +8,10 @@ route = routers.SimpleRouter(False)
 route.register('ue/?', UeViewSet)
 route.register('specialite/?', SpecialiteViewSet)
 route.register('plage/?', PlageViewSet)
+
 route.register('groupe/?', GroupeViewSet)
 route.register('classe/?', ClasseViewSet)
+route.register('groupe-classe/?', ClasseGroupeViewSet)
 
 route.register('cours-programme/?', CoursProgrammeViewSet)
 # route.register('enseigne/?', EnseigneViewSet)
