@@ -12,7 +12,7 @@ route.register('groupe/?', GroupeViewSet)
 route.register('classe/?', ClasseViewSet)
 
 route.register('cours-programme/?', CoursProgrammeViewSet)
-
+route.register('enseigne/?', EnseigneViewSet)
 
 urlpatterns=[
     path('', include(route.urls))

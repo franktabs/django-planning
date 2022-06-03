@@ -184,7 +184,7 @@ class CoursProgrammeSerializer(serializers.ModelSerializer):
 
 # _______________________________________________________________________
 
-class Enseignes(models.Model):
+class Enseigne(models.Model):
     ues = models.ForeignKey(Ue, on_delete=models.CASCADE)
     enseignants = models.ForeignKey(Enseignant, on_delete=models.SET_NULL, null=True) 
     classes = models.ForeignKey(Classe, on_delete=models.CASCADE)
@@ -193,13 +193,13 @@ class Enseignes(models.Model):
         db_table = 'enseignes'
         unique_together = (('ues_id', 'classes_id'))
 
-class EnseignesSerializer(serializers.ModelSerializer):
+class EnseigneSerializer(serializers.ModelSerializer):
     classes = ClasseSerializer()
     ues = UeSerializer()
     enseignants = EnseignantSerializer()
     
     class Meta:
-        model = Enseignes
+        model = Enseigne
         fields = '__all__'
         depth = 1
         

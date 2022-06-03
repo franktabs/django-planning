@@ -115,3 +115,8 @@ class CoursProgrammeViewSet(ModelViewSet):
 class ClasseViewSet(ModelViewSet):
     serializer_class = ClasseSerializer
     queryset = Classe.objects.all()
+
+
+class EnseigneViewSet(ModelViewSet):
+    serializer_class = EnseigneSerializer
+    queryset = Enseigne.objects.all()
