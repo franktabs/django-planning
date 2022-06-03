@@ -16,5 +16,6 @@ route.register('cours-programme/?', CoursProgrammeViewSet)
 
 urlpatterns=[
     path('', include(route.urls)),
-    path('salle-cours', salle_cours)
+    path('salle-cours', salle_cours),
+    path('salle-cours/<int:id>', salle_cours_id),
 ]

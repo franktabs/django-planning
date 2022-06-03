@@ -32,9 +32,10 @@ class CoursProgrammeViewSet(ModelViewSet):
     queryset = CoursProgramme.objects.all()
 
     def retrieve(self, request, *args, **kwargs):
-        cours_programme = CoursProgramme.objects.filter(classes_id=kwargs['pk'])
+        cours_programme = CoursProgramme.objects.filter(
+            classes_id=kwargs['pk'])
         serializer = self.serializer_class(cours_programme, many=True)
-        
+
         datas = serializer.data
         tab = []
         classes = []
@@ -54,9 +55,9 @@ class CoursProgrammeViewSet(ModelViewSet):
                             'salle': i['salles']['code'],
                         })
                         break
-                    
-                if not existes :
-                    
+
+                if not existes:
+
                     myjson = {}
                     myjson['id'] = i['id']
                     myjson['classes'] = i['classes']['id']
@@ -94,9 +95,9 @@ class CoursProgrammeViewSet(ModelViewSet):
                             'salle': i['salles']['code'],
                         })
                         break
-                    
-                if not existes :
-                    
+
+                if not existes:
+
                     myjson = {}
                     myjson['id'] = i['id']
                     myjson['codeClasse'] = i['classes']['code']
@@ -123,46 +124,94 @@ class EnseigneViewSet(ModelViewSet):
     serializer_class = EnseigneSerializer
     queryset = Enseigne.objects.all()
 
+
 @api_view(['GET'])
-def salle_cours(req:HttpRequest):
-        coursprogramme = CoursProgramme.objects.all()
-        serializer = CoursProgrammeSerializer(coursprogramme, many=True)
-        datas = serializer.data
-        tab = []
-        salles = []
-        
-        for i in datas:
-            
-            if i['salles']:
-                k = -1
-                existes = False
-                for j in salles:
-                    k += 1
-                    if i['salles']['code'] == j:
-                        existes = True
-                        tab[k]['cours'].append({
-                            'plage': i['plages']['id'] - 2,
-                            'ue': i['ues']['code'],
-                            'enseignant': i['enseignants']['noms'],
-                            'classe': i['classes']['code'],
-                        })
-                        break
-                    
-                if not existes :
-                    
-                    myjson = {}
-                    myjson['id'] = i['id']
-                    myjson['codeSalle'] = i['salles']['code']
-                    salles.append(i['salles']['code'])
-                    myjson['cours'] = [
-                        {
-                            'plage': i['plages']['id'] - 2,
-                            'ue': i['ues']['code'],
-                            'enseignant': i['enseignants']['noms'],
-                            'classe': i['classes']['code'],
-                        }
-                    ]
-                    tab.append(myjson)
-            
-        return Response(tab, 200)
-            
+def salle_cours(req: HttpRequest):
+    coursprogramme = CoursProgramme.objects.all()
+    serializer = CoursProgrammeSerializer(coursprogramme, many=True)
+    datas = serializer.data
+    tab = []
+    salles = []
+
+    for i in datas:
+
+        if i['salles']:
+            k = -1
+            existes = False
+            for j in salles:
+                k += 1
+                if i['salles']['code'] == j:
+                    existes = True
+                    tab[k]['cours'].append({
+                        'plage': i['plages']['id'] - 2,
+                        'ue': i['ues']['code'],
+                        'enseignant': i['enseignants']['noms'],
+                        'classe': i['classes']['code'],
+                    })
+                    break
+
+            if not existes:
+
+                myjson = {}
+                myjson['id'] = i['id']
+                myjson['codeSalle'] = i['salles']['code']
+                salles.append(i['salles']['code'])
+                myjson['cours'] = [
+                    {
+                        'plage': i['plages']['id'] - 2,
+                        'ue': i['ues']['code'],
+                        'enseignant': i['enseignants']['noms'],
+                        'classe': i['classes']['code'],
+                    }
+                ]
+                tab.append(myjson)
+
+    return Response(tab, 200)
+
+
+@api_view(['GET'])
+def salle_cours_id(req: HttpRequest, *args, **kwargs):
+    
+    cours_programme = CoursProgramme.objects.filter(
+            classes_id=kwargs['id'])
+    serializer = CoursProgrammeSerializer(cours_programme, many=True)
+    datas = serializer.data
+    tab = []
+    salles = []
+
+    for i in datas:
+
+        if i['salles']:
+            k = -1
+            existes = False
+            for j in salles:
+                k += 1
+                if i['salles']['code'] == j:
+                    existes = True
+                    tab[k]['cours'].append({
+                        'plage': i['plages']['id'] - 2,
+                        'ue': i['ues']['code'],
+                        'enseignant': i['enseignants']['noms'],
+                        'classe': i['classes']['code'],
+                    })
+                    break
+
+            if not existes:
+
+                myjson = {}
+                myjson['id'] = i['id']
+                myjson['codeSalle'] = i['salles']['code']
+                salles.append(i['salles']['code'])
+                myjson['cours'] = [
+                    {
+                        'plage': i['plages']['id'] - 2,
+                        'ue': i['ues']['code'],
+                        'enseignant': i['enseignants']['noms'],
+                        'classe': i['classes']['code'],
+                    }
+                ]
+                tab.append(myjson)
+
+    return Response(tab, 200)
+    
+    

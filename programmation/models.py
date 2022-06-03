@@ -158,18 +158,20 @@ class UeSerializer(serializers.ModelSerializer):
 # _______________________________________________________________________
 
 class CoursProgramme(models.Model):
+    # isProg = ((1, 'OUI'), (2, 'NON'))
     ues = models.ForeignKey(Ue, on_delete=models.CASCADE)
     enseignants = models.ForeignKey(Enseignant, on_delete=models.CASCADE) 
     classes = models.ForeignKey(Classe, on_delete=models.SET_NULL, null=True, blank=True)
     salles = models.ForeignKey(Salle, on_delete=models.SET_NULL, null=True, blank=True)
     plages= models.ForeignKey(Plage, on_delete=models.SET_NULL, null=True, blank=True)
+    # programmer = models.PositiveSmallIntegerField(null=False, choices=isProg)
     
     def __str__(self):
         return f'{self.ues} {self.enseignants}' 
     
     class Meta:
         db_table = 'cours_programmes'
-        unique_together = (('ues_id', 'classes_id'), ('salles_id', 'plages_id'))
+        unique_together = (('salles_id', 'plages_id'), ('ues_id', 'enseignants_id'), ('enseignants_id', 'plages_id'))
 
 class CoursProgrammeSerializer(serializers.ModelSerializer):
     classes = ClasseSerializer()
