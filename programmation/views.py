@@ -100,6 +100,7 @@ class CoursProgrammeViewSet(ModelViewSet):
 
                     myjson = {}
                     myjson['id'] = i['id']
+                    myjson['classes'] = i['classes']['id']
                     myjson['codeClasse'] = i['classes']['code']
                     classes.append(i['classes']['code'])
                     myjson['cours'] = [
@@ -154,6 +155,7 @@ def salle_cours(req: HttpRequest):
 
                 myjson = {}
                 myjson['id'] = i['id']
+                myjson['salles'] = i['salles']['id']
                 myjson['codeSalle'] = i['salles']['code']
                 salles.append(i['salles']['code'])
                 myjson['cours'] = [
