@@ -124,5 +124,45 @@ class EnseigneViewSet(ModelViewSet):
     queryset = Enseigne.objects.all()
 
 @api_view(['GET'])
-def salle_ue(req:HttpRequest):
-    pass
+def salle_cours(req:HttpRequest):
+        coursprogramme = CoursProgramme.objects.all()
+        serializer = CoursProgrammeSerializer(coursprogramme, many=True)
+        datas = serializer.data
+        tab = []
+        salles = []
+        
+        for i in datas:
+            
+            if i['salles']:
+                k = -1
+                existes = False
+                for j in salles:
+                    k += 1
+                    if i['salles']['code'] == j:
+                        existes = True
+                        tab[k]['cours'].append({
+                            'plage': i['plages']['id'] - 2,
+                            'ue': i['ues']['code'],
+                            'enseignant': i['enseignants']['noms'],
+                            'classe': i['classes']['code'],
+                        })
+                        break
+                    
+                if not existes :
+                    
+                    myjson = {}
+                    myjson['id'] = i['id']
+                    myjson['codeSalle'] = i['salles']['code']
+                    salles.append(i['salles']['code'])
+                    myjson['cours'] = [
+                        {
+                            'plage': i['plages']['id'] - 2,
+                            'ue': i['ues']['code'],
+                            'enseignant': i['enseignants']['noms'],
+                            'classe': i['classes']['code'],
+                        }
+                    ]
+                    tab.append(myjson)
+            
+        return Response(tab, 200)
+            
