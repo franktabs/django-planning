@@ -190,7 +190,7 @@ class CoursProgrammeSerializer(serializers.ModelSerializer):
     ues = UeSerializer()
     enseignants = EnseignantSerializer()
     salles = SalleSerializer()
-    # plages = PlageSerializer()
+    plages = PlageSerializer()
 
     class Meta:
         model = CoursProgramme
