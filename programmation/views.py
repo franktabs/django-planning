@@ -35,6 +35,7 @@ class CoursProgrammeViewSet(ModelViewSet):
     queryset = CoursProgramme.objects.all()
 
     def retrieve(self, request, *args, **kwargs):
+        
         cours_programme = CoursProgramme.objects.filter(
             classes_id=kwargs['pk'])
         serializer = self.serializer_class(cours_programme, many=True)

@@ -86,7 +86,7 @@ class Classe(models.Model):
     code = models.CharField(unique=True, max_length=45, null=False)
     effectif = models.IntegerField()
     departements = models.ForeignKey(Departement, on_delete=models.PROTECT)
-    specialites = models.ForeignKey(Specialite, on_delete=models.SET_NULL, null=True, blank=True)
+    # specialites = models.ForeignKey(Specialite, on_delete=models.SET_NULL, null=True, blank=True)
     groupes = models.ManyToManyField(
         Groupe, through="ClasseGroupe", related_name='classes')    
     class Meta:
@@ -97,8 +97,8 @@ class Classe(models.Model):
 
 
 class ClasseSerializer(serializers.ModelSerializer):
+    # specialites = SpecialiteSerializer(many=True)
     groupes = GroupeSerializer(many=True)
-    specialites = SpecialiteSerializer(many=True)
     class Meta:
         model = Classe
         fields = "__all__"
