@@ -174,7 +174,7 @@ class CoursProgramme(models.Model):
     ues = models.ForeignKey(Ue, on_delete=models.CASCADE)
     enseignants = models.ForeignKey(Enseignant, on_delete=models.CASCADE)
     classes = models.ForeignKey(
-        Classe, on_delete=models.SET_NULL, null=True, blank=True)
+        Classe, on_delete=models.CASCADE)
     salles = models.ForeignKey(
         Salle, on_delete=models.SET_NULL, null=True, blank=True)
     plages = models.ForeignKey(

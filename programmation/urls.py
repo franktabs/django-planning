@@ -20,4 +20,7 @@ urlpatterns=[
     path('salle-cours/<int:id>', salle_cours_id),
     path('enseignant-cours', enseignant_cours),
     path('enseignant-cours/<int:id>', enseignant_cours_id),
+    path('classe-cours', classe_cours),
+    path('classe-cours/<int:id>', classe_cours_id),
+    
 ]
