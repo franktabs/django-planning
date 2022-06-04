@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'serveur.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'plannings',
+        'NAME': 'django_planning',
         'USER': 'junior',
         'PASSWORD': 'junior',
         'HOST': 'localhost',
