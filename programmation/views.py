@@ -1,3 +1,4 @@
+from typing import AnyStr
 from django.http import HttpRequest
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
@@ -235,8 +236,14 @@ def enum_classe_cours(datas):
 
             if i['plages']:
                 plage = i['plages']['id'] - 2
+            else:
+                continue
+            
             if i['salles']:
                 salle = i['salles']['code']
+            else: 
+                continue
+                
             for j in classes:
                 k += 1
                 if i['classes']['code'] == j:
@@ -268,8 +275,56 @@ def enum_classe_cours(datas):
     return tab
 
 
+def enum_classe_notCours(datas):
+    tab = []
+    classes = []
+    for i in datas:
+
+        if i['classes']:
+            k = -1
+            existes = False
+
+            plage = None
+            salle = None
+
+            if i['plages']:
+                plage = i['plages']['id'] - 2
+                continue
+            if i['salles']:
+                salle = i['salles']['code']
+                continue
+            for j in classes:
+                k += 1
+                if i['classes']['code'] == j:
+                    existes = True
+                    tab[k]['cours'].append({
+                        'plage': plage,
+                        'ue': i['ues']['code'],
+                        'enseignant': i['enseignants']['noms'],
+                        'salle': salle,
+                    })
+                    break
+
+            if not existes:
+
+                myjson = {}
+                myjson['id'] = i['id']
+                myjson['classes'] = i['classes']['id']
+                myjson['codeClasse'] = i['classes']['code']
+                classes.append(i['classes']['code'])
+                myjson['cours'] = [
+                    {
+                        'plage': plage,
+                        'ue': i['ues']['code'],
+                        'enseignant': i['enseignants']['noms'],
+                        'salle': salle,
+                    }
+                ]
+                tab.append(myjson)
+    return tab
+
 @api_view(['GET'])
-def salle_cours(req: HttpRequest):
+def salle_coursView(req: HttpRequest):
     coursprogramme = CoursProgramme.objects.all()
     serializer = CoursProgrammeSerializer(coursprogramme, many=True)
     
@@ -279,7 +334,7 @@ def salle_cours(req: HttpRequest):
 
 
 @api_view(['GET'])
-def salle_cours_id(req: HttpRequest, *args, **kwargs):
+def salle_cours_idView(req: HttpRequest, *args, **kwargs):
 
     cours_programme = CoursProgramme.objects.filter(
         salles_id=kwargs['id'])
@@ -290,7 +345,7 @@ def salle_cours_id(req: HttpRequest, *args, **kwargs):
 
 
 @api_view(['GET'])
-def enseignant_cours(req: HttpRequest):
+def enseignant_coursView(req: HttpRequest):
     coursprogramme = CoursProgramme.objects.all()
     serializer = CoursProgrammeSerializer(coursprogramme, many=True)
     datas = serializer.data
@@ -299,7 +354,7 @@ def enseignant_cours(req: HttpRequest):
 
 
 @api_view(['GET'])
-def enseignant_cours_id(req: HttpRequest, *args, **kwargs):
+def enseignant_cours_idView(req: HttpRequest, *args, **kwargs):
     coursprogramme = CoursProgramme.objects.filter(
         enseignants_id=kwargs['id'])
     serializer = CoursProgrammeSerializer(coursprogramme, many=True)
@@ -309,8 +364,8 @@ def enseignant_cours_id(req: HttpRequest, *args, **kwargs):
 
 
 @api_view(['GET'])
-def classe_cours(req: HttpRequest):
-    coursprogramme = CoursProgramme.objects.all()
+def classe_coursView(req: HttpRequest):
+    coursprogramme = CoursProgramme.objects.exclude(plages_id=None)
     serializer = CoursProgrammeSerializer(coursprogramme, many=True)
     datas = serializer.data
     tab = enum_classe_cours(datas)
@@ -318,9 +373,31 @@ def classe_cours(req: HttpRequest):
 
 
 @api_view(['GET'])
-def classe_cours_id(req: HttpRequest, *args, **kwargs):
+def classe_cours_idView(req: HttpRequest, *args, **kwargs):
     coursprogramme = CoursProgramme.objects.filter(classes_id=kwargs['id'])
     serializer = CoursProgrammeSerializer(coursprogramme, many=True)
     datas = serializer.data
     tab = enum_classe_cours(datas)
+    
+    print('\n\n', tab)
+    print('\n\n')
+    
     return Response(tab, 200)
+
+@api_view(['GET'])
+def classe_notCoursView(req:HttpRequest):
+    coursprogramme = CoursProgramme.objects.filter(plages_id=None)
+    serializer = CoursProgrammeSerializer(coursprogramme, many=True)
+    datas = serializer.data
+    tab = enum_classe_notCours(datas)
+    return Response(tab, 200)
+
+
+@api_view(['GET'])
+def classe_notCours_idView(req:HttpRequest, *args, **kwargs ):
+    coursprogramme = CoursProgramme.objects.filter(classes_id=kwargs['id'], plages_id=None)
+    serializer = CoursProgrammeSerializer(coursprogramme, many=True)
+    datas = serializer.data
+    tab = enum_classe_notCours(datas)
+    return Response(status=200, data=tab)
+

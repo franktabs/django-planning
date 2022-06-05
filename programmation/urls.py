@@ -18,11 +18,12 @@ route.register('cours-programme/?', CoursProgrammeViewSet)
 
 urlpatterns=[
     path('', include(route.urls)),
-    path('salle-cours', salle_cours),
-    path('salle-cours/<int:id>', salle_cours_id),
-    path('enseignant-cours', enseignant_cours),
-    path('enseignant-cours/<int:id>', enseignant_cours_id),
-    path('classe-cours', classe_cours),
-    path('classe-cours/<int:id>', classe_cours_id),
-    
+    path('salle-cours', salle_coursView),
+    path('salle-cours/<int:id>', salle_cours_idView),
+    path('enseignant-cours', enseignant_coursView),
+    path('enseignant-cours/<int:id>', enseignant_cours_idView),
+    path('classe-cours', classe_coursView),
+    path('classe-cours/<int:id>', classe_cours_idView),
+    path('classe-notcours', classe_notCoursView),
+    path('classe-notcours/<int:id>', classe_notCours_idView),
 ]
