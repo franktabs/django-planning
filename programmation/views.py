@@ -236,13 +236,9 @@ def enum_classe_cours(datas):
 
             if i['plages']:
                 plage = i['plages']['id'] - 2
-            else:
-                continue
-            
+                
             if i['salles']:
                 salle = i['salles']['code']
-            else: 
-                continue
                 
             for j in classes:
                 k += 1
@@ -365,7 +361,7 @@ def enseignant_cours_idView(req: HttpRequest, *args, **kwargs):
 
 @api_view(['GET'])
 def classe_coursView(req: HttpRequest):
-    coursprogramme = CoursProgramme.objects.exclude(plages_id=None)
+    coursprogramme = CoursProgramme.objects.all()
     serializer = CoursProgrammeSerializer(coursprogramme, many=True)
     datas = serializer.data
     tab = enum_classe_cours(datas)
@@ -378,10 +374,6 @@ def classe_cours_idView(req: HttpRequest, *args, **kwargs):
     serializer = CoursProgrammeSerializer(coursprogramme, many=True)
     datas = serializer.data
     tab = enum_classe_cours(datas)
-    
-    print('\n\n', tab)
-    print('\n\n')
-    
     return Response(tab, 200)
 
 @api_view(['GET'])
