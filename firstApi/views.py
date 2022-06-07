@@ -162,3 +162,21 @@ def facultes_batimentsView(req:HttpRequest):
         else:
             table.append(faculte)
     return Response(table)
+
+@api_view(['GET'])
+def type_salleView(req:HttpRequest):
+    type_salles = TypeSalle.objects.all()
+    type_salles = TypeSalleSerializer(type_salles, many=True).data
+    new_type_salles = type_salles.copy()
+    table = []
+    for type_salle in new_type_salles:
+        salle = Salle.objects.filter(type_salles_id=type_salle['id'])
+        if salle: 
+            salle = SalleSerializer(salle, many=True).data
+            type_salle['salle']= salle
+            table.append(type_salle)
+        else:
+            table.append(type_salle)
+            
+    return Response(table)
+

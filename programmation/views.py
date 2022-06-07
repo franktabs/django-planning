@@ -317,25 +317,33 @@ def salle_libreView(req:HttpRequest):
     id_plage = req.data['plage']
     id_classe = req.data['classe']
     cours_programmes = CoursProgramme.objects.filter(plages_id=id_plage)
-    salles = Salle.objects.all()
+    salles = Salle.objects.all().order_by('id')
     all_salles = SalleSerializer(salles, many=True).data
     salles = all_salles.copy()
     if cours_programmes:
         for i in cours_programmes:
-            k=0
+            j=0
             for salle in salles:
                 if salle['id'] == i.salles_id:
-                    del salles[k]
+                    print('\n\n Suppression 1 \n\n')
+                    del salles[j]
                     break
-                k+=1
+                j+=1
     
     classe = Classe.objects.filter(id=id_classe)
-    k=0
-    for salle in salles:
+    j=0
+    
+    print(f'\n{salles}\n')
+    taille = len(salles) - 1
+    for j in range(taille):
+        print("{} taille: {} \n".format(j, len(salles)))
+        salle = salles[j]
+        print(f'\n {salle} \n')
         for i in classe:
+            
             if salle['capacite'] < i.effectif:
-                del salles[k]
-        k+=1
+                print('\n\n Suppression 2 \n position: {} \n nom_salle: {} \n effectif_class: {} \n capacite_salle {} \n'.format(j, salle['code'], i.effectif, salle['capacite']))
+                del salles[j]
     
     
     return Response(salles)

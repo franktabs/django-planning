@@ -23,5 +23,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('utilisateur', utilisateurView),
     path('batiment-salle', batiments_sallesView),
-    path('faculte-batiment', facultes_batimentsView)
+    path('type-salle', type_salleView ),
+    path('faculte-batiment', facultes_batimentsView),
 ]
