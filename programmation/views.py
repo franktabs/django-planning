@@ -70,9 +70,13 @@ def enum_salle_cours(datas):
                 if i['salles']['code'] == j:
                     existes = True
                     tab[k]['cours'].append({
+                        'id': i['id'],
                         'plage': i['plages']['id'] - 2,
+                        'idUe': i['ues']['id'],
                         'ue': i['ues']['code'],
+                        'idEnseignant': i['enseignants']['id'],
                         'enseignant': i['enseignants']['noms'],
+                        'idClasse': i['classes']['id'],
                         'classe': i['classes']['code'],
                     })
                     break
@@ -86,9 +90,13 @@ def enum_salle_cours(datas):
                 salles.append(i['salles']['code'])
                 myjson['cours'] = [
                     {
+                        'id': i['id'],
                         'plage': i['plages']['id'] - 2,
+                        'idUe': i['ues']['id'],
                         'ue': i['ues']['code'],
+                        'idEnseignant': i['enseignants']['id'],
                         'enseignant': i['enseignants']['noms'],
+                        'idClasse': i['classes']['id'],
                         'classe': i['classes']['code'],
                     }
                 ]
@@ -120,12 +128,18 @@ def enum_enseignant_cours(datas):
                 if i['enseignants']['noms'] == j:
                     existes = True
 
-                    tab[k]['cours'].append({
-                        'plage': plage,
-                        'ue': i['ues']['code'],
-                        'salle': salle,
-                        'classe': classe,
-                    })
+                    tab[k]['cours'].append(
+                        {
+                            'id': i['id'],
+                            'plage': plage,
+                            'idUe': i['ues']['id'],
+                            'ue': i['ues']['code'],
+                            'idSalle': i['salles']['id'] if salle else salle,
+                            'salle': salle,
+                            'idClasse': i['classes']['id'] if classe else classe,
+                            'classe': classe,
+                        }
+                    )
                     break
 
             if not existes:
@@ -137,9 +151,13 @@ def enum_enseignant_cours(datas):
                 enseignants.append(i['enseignants']['noms'])
                 myjson['cours'] = [
                     {
+                        'id': i['id'],
                         'plage': plage,
+                        'idUe': i['ues']['id'],
                         'ue': i['ues']['code'],
+                        'idSalle': i['salles']['id'] if salle else salle,
                         'salle': salle,
+                        'idClasse': i['classes']['id'] if classe else classe,
                         'classe': classe,
                     }
                 ]
@@ -172,7 +190,9 @@ def enum_classe_cours(datas):
                     tab[k]['cours'].append({
                         'plage': plage,
                         'ue': i['ues']['code'],
+                        'idEnseignant': i['enseignants']['id'],
                         'enseignant': i['enseignants']['noms'],
+                        'idSalle': i['salles']['id'] if salle else salle,
                         'salle': salle,
                     })
                     break
@@ -188,7 +208,9 @@ def enum_classe_cours(datas):
                     {
                         'plage': plage,
                         'ue': i['ues']['code'],
+                        'idEnseignant': i['enseignants']['id'],
                         'enseignant': i['enseignants']['noms'],
+                        'idSalle': i['salles']['id'] if salle else salle,
                         'salle': salle,
                     }
                 ]
@@ -335,24 +357,23 @@ def salle_libreView(req: HttpRequest):
     tab = []
     if cours_programmes:
         for i in cours_programmes:
-            j=0
+            j = 0
             for salle in salles:
-                if salle['id'] == i.salles_id :
+                if salle['id'] == i.salles_id:
                     del salles[j]
                     break
-                j+=1
+                j += 1
 
     for salle in salles:
         cap = (float)(salle['capacite'])
-        if (eff - eff*0.1 <= cap ) :
+        if (eff - eff*0.1 <= cap and cap <= eff + eff/2):
             tab.append(
-        {
-            'id': salle['id'],
-            'code': salle['code'],
-            'nom': salle['nom'],
-            'etat_electricite': salle["etat_electricite"],
-            'capacite': salle['capacite'],
-        })
-    
-    
+                {
+                    'id': salle['id'],
+                    'code': salle['code'],
+                    'nom': salle['nom'],
+                    'etat_electricite': salle["etat_electricite"],
+                    'capacite': salle['capacite'],
+                })
+
     return Response(tab)
