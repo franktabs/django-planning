@@ -241,9 +241,13 @@ def enum_classe_notCours(datas):
                 if i['classes']['code'] == j:
                     existes = True
                     tab[k]['cours'].append({
+                        'id': i['id'],
                         'plage': plage,
+                        'idUe': i['ues']['id'],
                         'ue': i['ues']['code'],
+                        'idEnseignant': i['enseignants']['id'],
                         'enseignant': i['enseignants']['noms'],
+                        'idSalle': i['salles']['id'] if salle else salle,
                         'salle': salle,
                     })
                     break
@@ -251,12 +255,12 @@ def enum_classe_notCours(datas):
             if not existes:
 
                 myjson = {}
-                myjson['id'] = i['id']
                 myjson['classes'] = i['classes']['id']
                 myjson['codeClasse'] = i['classes']['code']
                 classes.append(i['classes']['code'])
                 myjson['cours'] = [
                     {
+                        'id': i['id'],
                         'plage': plage,
                         'idUe': i['ues']['id'],
                         'ue': i['ues']['code'],
