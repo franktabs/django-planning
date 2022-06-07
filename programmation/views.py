@@ -262,6 +262,7 @@ def enum_classe_notCours(datas):
                         'ue': i['ues']['code'],
                         'idEnseignant': i['enseignants']['id'],
                         'enseignant': i['enseignants']['noms'],
+                        'idSalle': i['salles']['id'] if salle else salle,
                         'salle': salle,
                     }
                 ]
