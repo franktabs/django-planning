@@ -11,125 +11,44 @@ from .models import *
 class UeViewSet(ModelViewSet):
     serializer_class = UeSerializer
     queryset = Ue.objects.all()
+    query = "SELECT * FROM ues"
 
 class ClasseGroupeViewSet(ModelViewSet):
     serializer_class = ClasseGroupeSerializer
     queryset = ClasseGroupe.objects.all()
+    query = "SELECT * FROM classes"
 
 class GroupeViewSet(ModelViewSet):
     serializer_class = GroupeSerializer
     queryset = Groupe.objects.all()
+    query = "SELECT * FROM groupes"
 
 
 class PlageViewSet(ModelViewSet):
     serializer_class = PlageSerializer
     queryset = Plage.objects.all()
-
+    query = "SELECT * FROM plages"
 
 class SpecialiteViewSet(ModelViewSet):
     serializer_class = SpecialiteSerializer
     queryset = Specialite.objects.all()
-
+    query = "SELECT * FROM specialites"
 
 class CoursProgrammeViewSet(ModelViewSet):
     serializer_class = CoursProgrammeSerializer
     queryset = CoursProgramme.objects.all()
-
-    # def retrieve(self, request, *args, **kwargs):
-        
-    #     cours_programme = CoursProgramme.objects.filter(
-    #         classes_id=kwargs['pk'])
-    #     serializer = self.serializer_class(cours_programme, many=True)
-
-    #     datas = serializer.data
-    #     tab = []
-    #     classes = []
-    #     for i in datas:
-
-    #         if i['classes']:
-    #             k = -1
-    #             existes = False
-    #             for j in classes:
-    #                 k += 1
-    #                 if i['classes']['code'] == j:
-    #                     existes = True
-    #                     tab[k]['cours'].append({
-    #                         'plage': i['plages']['id'] - 2,
-    #                         'ue': i['ues']['code'],
-    #                         'enseignant': i['enseignants']['noms'],
-    #                         'salle': i['salles']['code'],
-    #                     })
-    #                     break
-
-    #             if not existes:
-
-    #                 myjson = {}
-    #                 myjson['id'] = i['id']
-    #                 myjson['classes'] = i['classes']['id']
-    #                 myjson['codeClasse'] = i['classes']['code']
-    #                 classes.append(i['classes']['code'])
-    #                 myjson['cours'] = [
-    #                     {
-    #                         'plage': i['plages']['id'] - 2,
-    #                         'ue': i['ues']['code'],
-    #                         'enseignant': i['enseignants']['noms'],
-    #                         'salle': i['salles']['code'],
-    #                     }
-    #                 ]
-    #                 tab.append(myjson)
-    #     return Response(tab, 200)
-
-    # def list(self, request, *args, **kwargs):
-    #     serializer = self.serializer_class(self.queryset, many=True)
-    #     datas = serializer.data
-    #     tab = []
-    #     classes = []
-    #     for i in datas:
-
-    #         if i['classes']:
-    #             k = -1
-    #             existes = False
-    #             for j in classes:
-    #                 k += 1
-    #                 if i['classes']['code'] == j:
-    #                     existes = True
-    #                     tab[k]['cours'].append({
-    #                         'plage': i['plages']['id'] - 2,
-    #                         'ue': i['ues']['code'],
-    #                         'enseignant': i['enseignants']['noms'],
-    #                         'salle': i['salles']['code'],
-    #                     })
-    #                     break
-
-    #             if not existes:
-
-    #                 myjson = {}
-    #                 myjson['id'] = i['id']
-    #                 myjson['classes'] = i['classes']['id']
-    #                 myjson['codeClasse'] = i['classes']['code']
-    #                 classes.append(i['classes']['code'])
-    #                 myjson['cours'] = [
-    #                     {
-    #                         'plage': i['plages']['id'] - 2,
-    #                         'ue': i['ues']['code'],
-    #                         'enseignant': i['enseignants']['noms'],
-    #                         'salle': i['salles']['code'],
-    #                     }
-    #                 ]
-    #                 tab.append(myjson)
-
-    #     return Response(tab, 200)
+    query = "SELECT * FROM cours_programmes"
 
 
 class ClasseViewSet(ModelViewSet):
     serializer_class = ClasseSerializer
     queryset = Classe.objects.all()
-
+    query = "SELECT * FROM classes"
 
 class EnseigneViewSet(ModelViewSet):
     serializer_class = EnseigneSerializer
     queryset = Enseigne.objects.all()
-
+    query = "SELECT * FROM enseignes"
 
 def enum_salle_cours(datas):
     tab = []
@@ -393,3 +312,28 @@ def classe_notCours_idView(req:HttpRequest, *args, **kwargs ):
     tab = enum_classe_notCours(datas)
     return Response(status=200, data=tab)
 
+@api_view(['POST'])
+def salle_libreView(req:HttpRequest):
+    id_plage = req.data['plage']
+    id_classe = req.data['classe']
+    cours_programmes = CoursProgramme.objects.filter(plages_id=id_plage)
+    salles = Salle.objects.all()
+    if cours_programmes:
+        for i in cours_programmes:
+            for salle in salles:
+                if salle.id == i.salle_id:
+                    del salle
+                    break
+    
+    classe = Classe.objects.filter(id=id_classe)
+    
+    for salle in salles:
+        for i in classe:
+            if salle.capacite < i.effectif:
+                del salle
+    
+    serializer = SalleSerializer(salles, many=True)
+    
+    return Response(serializer.data)
+
+            

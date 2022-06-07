@@ -26,4 +26,6 @@ urlpatterns=[
     path('classe-cours/<int:id>', classe_cours_idView),
     path('classe-notcours', classe_notCoursView),
     path('classe-notcours/<int:id>', classe_notCours_idView),
+    path('salle-libre', salle_libreView),
+    
 ]
