@@ -181,7 +181,8 @@ class CoursProgramme(models.Model):
 
     class Meta:
         db_table = 'cours_programmes'
-        unique_together = (('salles_id', 'plages_id'), ('ues_id', 'classes_id'), ('enseignants_id', 'plages_id'))
+        unique_together = (('salles_id', 'plages_id'), ('ues_id',
+                           'enseignants_id', 'classes_id'), ('enseignants_id', 'plages_id'))
 
 
 class CoursProgrammeSerializer(serializers.ModelSerializer):
