@@ -101,8 +101,8 @@ class Salle(models.Model):
     etat_electricite = models.IntegerField(choices=electricite)
     capacite = models.IntegerField()
     batiments = models.ForeignKey(
-        Batiment, on_delete=models.SET_NULL, null=True, blank=True)
-    type_salles = models.ForeignKey(TypeSalle, on_delete=models.PROTECT)
+        Batiment, null=True, on_delete=models.SET_NULL,  blank=True)
+    type_salles = models.ForeignKey(TypeSalle, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'salles'
@@ -112,8 +112,8 @@ class Salle(models.Model):
         return self.code
 
 class SalleSerializer(serializers.ModelSerializer):
-    batiments = BatimentSerializer(read_only=True)
-    type_salles = TypeSalleSerializer(read_only=True)
+    batiments = BatimentSerializer()
+    type_salles = TypeSalleSerializer()
 
     class Meta:
         model = Salle

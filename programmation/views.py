@@ -13,10 +13,12 @@ class UeViewSet(ModelViewSet):
     queryset = Ue.objects.all()
     query = "SELECT * FROM ues"
 
+
 class ClasseGroupeViewSet(ModelViewSet):
     serializer_class = ClasseGroupeSerializer
     queryset = ClasseGroupe.objects.all()
     query = "SELECT * FROM classes"
+
 
 class GroupeViewSet(ModelViewSet):
     serializer_class = GroupeSerializer
@@ -29,10 +31,12 @@ class PlageViewSet(ModelViewSet):
     queryset = Plage.objects.all()
     query = "SELECT * FROM plages"
 
+
 class SpecialiteViewSet(ModelViewSet):
     serializer_class = SpecialiteSerializer
     queryset = Specialite.objects.all()
     query = "SELECT * FROM specialites"
+
 
 class CoursProgrammeViewSet(ModelViewSet):
     serializer_class = CoursProgrammeSerializer
@@ -45,10 +49,12 @@ class ClasseViewSet(ModelViewSet):
     queryset = Classe.objects.all()
     query = "SELECT * FROM classes"
 
+
 class EnseigneViewSet(ModelViewSet):
     serializer_class = EnseigneSerializer
     queryset = Enseigne.objects.all()
     query = "SELECT * FROM enseignes"
+
 
 def enum_salle_cours(datas):
     tab = []
@@ -155,10 +161,10 @@ def enum_classe_cours(datas):
 
             if i['plages']:
                 plage = i['plages']['id'] - 2
-                
+
             if i['salles']:
                 salle = i['salles']['code']
-                
+
             for j in classes:
                 k += 1
                 if i['classes']['code'] == j:
@@ -238,11 +244,12 @@ def enum_classe_notCours(datas):
                 tab.append(myjson)
     return tab
 
+
 @api_view(['GET'])
 def salle_coursView(req: HttpRequest):
     coursprogramme = CoursProgramme.objects.all()
     serializer = CoursProgrammeSerializer(coursprogramme, many=True)
-    
+
     datas = serializer.data
     tab = enum_salle_cours(datas)
     return Response(tab, 200)
@@ -295,8 +302,9 @@ def classe_cours_idView(req: HttpRequest, *args, **kwargs):
     tab = enum_classe_cours(datas)
     return Response(tab, 200)
 
+
 @api_view(['GET'])
-def classe_notCoursView(req:HttpRequest):
+def classe_notCoursView(req: HttpRequest):
     coursprogramme = CoursProgramme.objects.filter(plages_id=None)
     serializer = CoursProgrammeSerializer(coursprogramme, many=True)
     datas = serializer.data
@@ -305,47 +313,46 @@ def classe_notCoursView(req:HttpRequest):
 
 
 @api_view(['GET'])
-def classe_notCours_idView(req:HttpRequest, *args, **kwargs ):
-    coursprogramme = CoursProgramme.objects.filter(classes_id=kwargs['id'], plages_id=None)
+def classe_notCours_idView(req: HttpRequest, *args, **kwargs):
+    coursprogramme = CoursProgramme.objects.filter(
+        classes_id=kwargs['id'], plages_id=None)
     serializer = CoursProgrammeSerializer(coursprogramme, many=True)
     datas = serializer.data
     tab = enum_classe_notCours(datas)
     return Response(status=200, data=tab)
 
+
 @api_view(['POST'])
-def salle_libreView(req:HttpRequest):
+def salle_libreView(req: HttpRequest):
     id_plage = req.data['plage']
     id_classe = req.data['classe']
     cours_programmes = CoursProgramme.objects.filter(plages_id=id_plage)
-    salles = Salle.objects.all().order_by('id')
+    salles = Salle.objects.all().order_by('capacite')
+    classe = Classe.objects.filter(id=id_classe)
     all_salles = SalleSerializer(salles, many=True).data
     salles = all_salles.copy()
+    eff = (float)(classe[0].effectif)
+    tab = []
     if cours_programmes:
         for i in cours_programmes:
             j=0
             for salle in salles:
-                if salle['id'] == i.salles_id:
-                    print('\n\n Suppression 1 \n\n')
+                if salle['id'] == i.salles_id :
                     del salles[j]
                     break
                 j+=1
-    
-    classe = Classe.objects.filter(id=id_classe)
-    j=0
-    
-    print(f'\n{salles}\n')
-    taille = len(salles) - 1
-    for j in range(taille):
-        print("{} taille: {} \n".format(j, len(salles)))
-        salle = salles[j]
-        print(f'\n {salle} \n')
-        for i in classe:
-            
-            if salle['capacite'] < i.effectif:
-                print('\n\n Suppression 2 \n position: {} \n nom_salle: {} \n effectif_class: {} \n capacite_salle {} \n'.format(j, salle['code'], i.effectif, salle['capacite']))
-                del salles[j]
-    
-    
-    return Response(salles)
 
-            
+    for salle in salles:
+        cap = (float)(salle['capacite'])
+        if (eff - eff*0.1 <= cap ) :
+            tab.append(
+        {
+            'id': salle['id'],
+            'code': salle['code'],
+            'nom': salle['nom'],
+            'etat_electricite': salle["etat_electricite"],
+            'capacite': salle['capacite'],
+        })
+    
+    
+    return Response(tab)
