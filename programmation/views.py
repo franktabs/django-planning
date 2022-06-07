@@ -258,7 +258,9 @@ def enum_classe_notCours(datas):
                 myjson['cours'] = [
                     {
                         'plage': plage,
+                        'idUe': i['ues']['id'],
                         'ue': i['ues']['code'],
+                        'idEnseignant': i['enseignants']['id'],
                         'enseignant': i['enseignants']['noms'],
                         'salle': salle,
                     }
