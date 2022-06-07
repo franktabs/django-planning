@@ -131,7 +131,7 @@ class ClasseGroupeSerializer(serializers.ModelSerializer):
 
 class Ue(models.Model):
     code = models.CharField(max_length=45, null=False, unique=True)
-    intitule = models.CharField(max_length=255)
+    intitule = models.CharField(max_length=255, null=False, blank=True)
     credit = models.PositiveSmallIntegerField(null=False)
     # classes = models.ManyToManyField(Classe, through='Enseigne', related_name='ues')
     # enseignants = models.ManyToManyField(Enseignant, through='Enseigne', related_name='ues')
@@ -181,8 +181,7 @@ class CoursProgramme(models.Model):
 
     class Meta:
         db_table = 'cours_programmes'
-        unique_together = (('salles_id', 'plages_id'), ('ues_id',
-                           'enseignants_id'), ('enseignants_id', 'plages_id'))
+        unique_together = (('salles_id', 'plages_id'), ('ues_id', 'classes_id'), ('enseignants_id', 'plages_id'))
 
 
 class CoursProgrammeSerializer(serializers.ModelSerializer):
