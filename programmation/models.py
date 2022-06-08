@@ -5,6 +5,7 @@ from firstApi.models import Departement, DepartementSerializer, Enseignant, Ense
 
 # Create your models here.
 
+
 # _______________________________________________________________________
 
 class Specialite(models.Model):
@@ -215,7 +216,7 @@ class CoursProgramme(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['ues_id', 'enseignants_id', 'classes_id'], name='contrainte_cours_programme')
         ]
-        unique_together = (('salles_id', 'plages_id'), ('enseignants_id', 'plages_id'))
+        unique_together = (('salles_id', 'plages_id'), ('enseignants_id', 'plages_id'), ('ues_id', 'classes_id'))
         
 class CoursProgrammeWriteSerializer(serializers.ModelSerializer):
     class Meta :

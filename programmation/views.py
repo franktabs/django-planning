@@ -280,6 +280,8 @@ def enum_classe_notCours(datas):
                 tab.append(myjson)
     return tab
 
+def enum_ue_enseignant(datas):
+    pass
 
 @api_view(['GET'])
 def salle_coursView(req: HttpRequest):
@@ -390,4 +392,21 @@ def salle_libreView(req: HttpRequest):
                     'capacite': salle['capacite'],
                 })
 
+    return Response(tab)
+
+@api_view(['GET'])
+def ue_enseignantView(req:HttpRequest, id):
+    ues = CoursProgramme.objects.filter(ues_id=id)
+    serializer = CoursProgrammeSerializer(data=ues, many=True)
+    serializer.is_valid()
+    tab=[]
+    exits = False
+    for i in serializer.data:
+        tab.append({
+            'id': i['id'],
+            'idUe': i['ues']['id'],
+            'ue': i['ues']['code'],
+            'idEnseignant': i['enseignants']['id'],
+            'enseignant': i['enseignants']['noms']
+        })
     return Response(tab)
