@@ -1,3 +1,4 @@
+from dataclasses import field
 from rest_framework import serializers
 from django.db import models
 from firstApi.models import Departement, DepartementSerializer, Enseignant, EnseignantSerializer, Salle, SalleSerializer
@@ -165,37 +166,6 @@ class UeSerializer(serializers.ModelSerializer):
 # _______________________________________________________________________
 
 
-class CoursProgramme(models.Model):
-    # isProg = ((1, 'OUI'), (2, 'NON'))
-    ues = models.ForeignKey(Ue, on_delete=models.CASCADE)
-    enseignants = models.ForeignKey(Enseignant, on_delete=models.CASCADE)
-    classes = models.ForeignKey(Classe, on_delete=models.CASCADE)
-    salles = models.ForeignKey(
-        Salle, on_delete=models.SET_NULL, null=True, blank=True)
-    plages = models.ForeignKey(
-        Plage, on_delete=models.SET_NULL, null=True, blank=True)
-    # programmer = models.PositiveSmallIntegerField(null=False, choices=isProg)
-
-    def __str__(self):
-        return f'{self.ues} {self.enseignants}'
-
-    class Meta:
-        db_table = 'cours_programmes'
-        unique_together = (('salles_id', 'plages_id'), ('ues_id',
-                            'classes_id'), ('enseignants_id', 'plages_id'))
-
-
-class CoursProgrammeSerializer(serializers.ModelSerializer):
-    classes = ClasseSerializer()
-    ues = UeSerializer()
-    enseignants = EnseignantSerializer()
-    salles = SalleSerializer()
-    plages = PlageSerializer()
-
-    class Meta:
-        model = CoursProgramme
-        fields = '__all__'
-
 # _______________________________________________________________________
 
 
@@ -207,8 +177,11 @@ class Enseigne(models.Model):
 
     class Meta:
         db_table = 'enseignes'
-        unique_together = (('ues_id', 'classes_id'))
-
+        unique_together = ('ues_id', 'enseignants_id', 'classes_id')
+        constraints = [
+            
+            models.UniqueConstraint(fields=['ues_id', 'enseignants_id', 'classes_id'], name='contrainte_enseigne')
+        ]
 
 class EnseigneSerializer(serializers.ModelSerializer):
     classes = ClasseSerializer()
@@ -219,10 +192,46 @@ class EnseigneSerializer(serializers.ModelSerializer):
         model = Enseigne
         fields = '__all__'
 
-
 # _______________________________________________________________________
 
 
+class CoursProgramme(models.Model):
+    # isProg = ((1, 'OUI'), (2, 'NON'))
+    ues = models.ForeignKey(Ue, on_delete=models.CASCADE)
+    enseignants = models.ForeignKey(Enseignant, on_delete=models.CASCADE)
+    classes = models.ForeignKey(Classe, on_delete=models.CASCADE)
+    salles = models.ForeignKey(
+        Salle, on_delete=models.SET_NULL, null=True, blank=True)
+    plages = models.ForeignKey(
+        Plage, on_delete=models.SET_NULL, null=True, blank=True)
+    # programmer = models.PositiveSmallIntegerField(null=False, choices=isProg)
+    contrainte_cours_programme = models.ForeignObject(to=Enseigne, from_fields=['ues_id', 'enseignants_id', 'classes_id'], to_fields=['ues_id', 'enseignants_id', 'classes_id'], on_delete=models.CASCADE, unique=True),
+    
+    def __str__(self):
+        return f'{self.ues} {self.enseignants}'
+
+    class Meta:
+        db_table = 'cours_programmes'
+        constraints = [
+            models.UniqueConstraint(fields=['ues_id', 'enseignants_id', 'classes_id'], name='contrainte_cours_programme')
+        ]
+        unique_together = (('salles_id', 'plages_id'), ('enseignants_id', 'plages_id'))
+        
+class CoursProgrammeWriteSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = CoursProgramme
+        fields= '__all__'
+
+class CoursProgrammeSerializer(serializers.ModelSerializer):
+    classes = ClasseSerializer()
+    ues = UeSerializer()
+    enseignants = EnseignantSerializer()
+    salles = SalleSerializer()
+    plages = PlageSerializer()
+
+    class Meta:
+        model = CoursProgramme
+        fields = '__all__'
 # _______________________________________________________________________
 
 

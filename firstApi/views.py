@@ -64,8 +64,21 @@ class UtilisateurViewSet(ABC, ModelViewSet):
         return Response(utilisateur_test.data, status=201)
 
 class SalleViewSet(ModelViewSet):
-    serializer_class = SalleSerializer
     queryset = Salle.objects.all()
+    
+    def get_serializer_class(self):
+        
+        if self.request.method=='POST' or self.request.method=='PUT':
+            return SalleWriteSerializer
+        else:
+            return SalleSerializer
+    
+    # def list(self, request, *args, **kwargs):
+        # SalleSerializer.batiments()
+        # SalleSerializer.type_salles()
+    #     serializer = SalleSerializer(self.queryset, many=True)
+        
+    #     return Response(serializer.data)
 
 class EtudiantViewSet(UtilisateurViewSet):
     serializer_class = EtudiantSerializer

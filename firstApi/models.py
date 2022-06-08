@@ -1,6 +1,7 @@
 from django.db import models
 from rest_framework import serializers
-
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 def importClass():
     from programmation import models
     return models
@@ -11,9 +12,12 @@ def importClass():
 # # Creation Faculte______________________________________________________
 
 
+def faculte_validation(value):
+    if value == 'FAC' :
+        raise ValidationError(_('is impossible to insert'))
 
 class Faculte(models.Model):
-    code = models.CharField(max_length=45, unique=True, null=False)
+    code = models.CharField(max_length=45, unique=True, null=False, validators=[faculte_validation])
     nom = models.CharField(max_length=45, null=False)
     
     class Meta:
@@ -100,9 +104,8 @@ class Salle(models.Model):
     nom = models.CharField(max_length=45)
     etat_electricite = models.IntegerField(choices=electricite)
     capacite = models.IntegerField()
-    batiments = models.ForeignKey(
-        Batiment, null=True, on_delete=models.SET_NULL,  blank=True)
-    type_salles = models.ForeignKey(TypeSalle, on_delete=models.CASCADE)
+    batiments = models.ForeignKey(Batiment, null=True,related_name='batiments', on_delete=models.SET_NULL,  blank=True)
+    type_salles = models.ForeignKey(TypeSalle, on_delete=models.CASCADE, null=False)
 
     class Meta:
         db_table = 'salles'
@@ -111,13 +114,18 @@ class Salle(models.Model):
     def __str__(self):
         return self.code
 
-class SalleSerializer(serializers.ModelSerializer):
-    batiments = BatimentSerializer()
-    type_salles = TypeSalleSerializer()
-
+class SalleWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Salle
         fields = '__all__'
+
+class SalleSerializer(serializers.ModelSerializer):
+    batiments = BatimentSerializer()
+    type_salles = TypeSalleSerializer()
+    class Meta:
+        model = Salle
+        fields = '__all__'
+        # read_only_fields= ('batiments', 'type_salles')
 # # ______________________________________________________________________________
 
 

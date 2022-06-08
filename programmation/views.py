@@ -39,9 +39,15 @@ class SpecialiteViewSet(ModelViewSet):
 
 
 class CoursProgrammeViewSet(ModelViewSet):
-    serializer_class = CoursProgrammeSerializer
     queryset = CoursProgramme.objects.all()
     query = "SELECT * FROM cours_programmes"
+    
+    def get_serializer_class(self):
+        if self.request.method=='POST' or self.request.method=='PUT':
+            return CoursProgrammeWriteSerializer
+        else:
+            return CoursProgrammeSerializer
+    
 
 
 class ClasseViewSet(ModelViewSet):
