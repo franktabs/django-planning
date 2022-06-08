@@ -449,4 +449,20 @@ def departement_enseignantView(req: HttpRequest, id):
 def enseignant_libreView(req:HttpRequest):
     cours = CoursProgramme.objects.filter(enseignants_id=req.data['enseignants'], plages_id=req.data['plages'])
     existe = True if cours else False
-    return Response(existe)
+    tab=[]
+    if cours:
+        existe=True
+        cours = CoursProgrammeSerializer(cours, many=True)
+        for i in cours.data:
+            tab.append({
+                'result': existe,
+                'message': ' {} de {} en {} '.format(i['plages']['jour'], i['plages']['periode'], i['classes']['code'])
+            })
+    else:
+        existe=False
+        tab.append({
+            'result': existe,
+        })
+            
+            
+    return Response(tab)
