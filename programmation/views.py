@@ -76,7 +76,7 @@ def enum_salle_cours(datas):
                     existes = True
                     tab[k]['cours'].append({
                         'id': i['id'],
-                        'plage': i['plages']['id'] - 2,
+                        'plage': i['plages']['id'],
                         'idUe': i['ues']['id'],
                         'ue': i['ues']['code'],
                         'idEnseignant': i['enseignants']['id'],
@@ -95,7 +95,7 @@ def enum_salle_cours(datas):
                 myjson['cours'] = [
                     {
                         'id': i['id'],
-                        'plage': i['plages']['id'] - 2,
+                        'plage': i['plages']['id'],
                         'idUe': i['ues']['id'],
                         'ue': i['ues']['code'],
                         'idEnseignant': i['enseignants']['id'],
@@ -181,7 +181,7 @@ def enum_classe_cours(datas):
             salle = None
 
             if i['plages']:
-                plage = i['plages']['id'] - 2
+                plage = i['plages']['id']
 
             if i['salles']:
                 salle = i['salles']['code']
@@ -237,7 +237,7 @@ def enum_classe_notCours(datas):
             salle = None
 
             if i['plages']:
-                plage = i['plages']['id'] - 2
+                plage = i['plages']['id']
                 continue
             if i['salles']:
                 salle = i['salles']['code']
