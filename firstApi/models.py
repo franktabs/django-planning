@@ -12,7 +12,8 @@ def importClass():
 # # Creation Faculte______________________________________________________
 
 
-def faculte_validation(value):
+def faculte_validation(value, *args, **kwargs):
+    print('\n\n {} \n\n'.format(value))
     if value == 'FAC' :
         raise ValidationError(_('is impossible to insert'))
 

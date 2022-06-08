@@ -41,13 +41,12 @@ class SpecialiteViewSet(ModelViewSet):
 class CoursProgrammeViewSet(ModelViewSet):
     queryset = CoursProgramme.objects.all()
     query = "SELECT * FROM cours_programmes"
-    
+
     def get_serializer_class(self):
-        if self.request.method=='POST' or self.request.method=='PUT':
+        if self.request.method == 'POST' or self.request.method == 'PUT':
             return CoursProgrammeWriteSerializer
         else:
             return CoursProgrammeSerializer
-    
 
 
 class ClasseViewSet(ModelViewSet):
@@ -280,8 +279,10 @@ def enum_classe_notCours(datas):
                 tab.append(myjson)
     return tab
 
+
 def enum_ue_enseignant(datas):
     pass
+
 
 @api_view(['GET'])
 def salle_coursView(req: HttpRequest):
@@ -394,13 +395,12 @@ def salle_libreView(req: HttpRequest):
 
     return Response(tab)
 
+
 @api_view(['GET'])
-def ue_enseignantView(req:HttpRequest, id):
+def ue_enseignantView(req: HttpRequest, id):
     ues = CoursProgramme.objects.filter(ues_id=id)
-    serializer = CoursProgrammeSerializer(data=ues, many=True)
-    serializer.is_valid()
-    tab=[]
-    exits = False
+    serializer = CoursProgrammeSerializer(ues, many=True)
+    tab = []
     for i in serializer.data:
         tab.append({
             'id': i['id'],
@@ -409,4 +409,40 @@ def ue_enseignantView(req:HttpRequest, id):
             'idEnseignant': i['enseignants']['id'],
             'enseignant': i['enseignants']['noms']
         })
+    return Response(tab)
+
+
+@api_view(['GET'])
+def departement_enseignantView(req: HttpRequest, id):
+    cours = CoursProgramme.objects.filter(ues_id=id)
+    serializer = CoursProgrammeSerializer(cours, many=True)
+    tab = []
+    exist = []
+    for i in serializer.data:
+        tab.append({
+            'id': i['id'],
+            'idUe': i['ues']['id'],
+            'ue': i['ues']['code'],
+            'idEnseignant': i['enseignants']['id'],
+            'enseignant': i['enseignants']['noms']
+        })
+        exist.append(i['enseignants']['id'])
+
+    depart = None
+    for i in serializer.data:
+        depart = i['classes']['departements']['id']
+        if depart:
+            print('\n\n 436 execution {}\n\n'.format(depart))
+            enseignants = Enseignant.objects.filter(departements_id=depart)
+            for j in enseignants:
+                if not (j.id in exist):
+                    tab.append({
+                        'id': i['id'],
+                        'idUe': i['ues']['id'],
+                        'ue': i['ues']['code'],
+                        'idEnseignant': j.id,
+                        'enseignant': j.noms
+                    })
+        break
+    
     return Response(tab)

@@ -96,9 +96,14 @@ class Classe(models.Model):
     def __str__(self):
         return self.code
 
+class ClasseWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Classe
+        fields = "__all__"
 
 class ClasseSerializer(serializers.ModelSerializer):
     specialites = SpecialiteSerializer()
+    departements= DepartementSerializer()
     groupes = GroupeSerializer(many=True)
     class Meta:
         model = Classe

@@ -27,5 +27,6 @@ urlpatterns=[
     path('classe-notcours', classe_notCoursView),
     path('classe-notcours/<int:id>', classe_notCours_idView),
     path('salle-libre', salle_libreView),
-    path('ue-enseignant/<int:id>', ue_enseignantView)
+    path('ue-enseignant/<int:id>', ue_enseignantView),
+    path('ue-depart-enseignant/<int:id>', departement_enseignantView)
 ]
