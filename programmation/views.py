@@ -280,8 +280,6 @@ def enum_classe_notCours(datas):
     return tab
 
 
-def enum_ue_enseignant(datas):
-    pass
 
 
 @api_view(['GET'])
@@ -446,3 +444,9 @@ def departement_enseignantView(req: HttpRequest, id):
         break
     
     return Response(tab)
+
+@api_view(['POST'])
+def enseignant_libreView(req:HttpRequest):
+    cours = CoursProgramme.objects.filter(enseignants_id=req.data['enseignants'], plages_id=req.data['plages'])
+    existe = True if cours else False
+    return Response(existe)
