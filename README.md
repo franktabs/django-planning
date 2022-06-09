@@ -1,9 +1,8 @@
-# django-planning
 
-                     BACKEND
-_______________________________________________________
+# BACKEND
 
-          Gestion de planning en Django coté Backend
+-------------------------------------------------------
+Gestion de planning en Django coté Backend
 _______________________________________________________
 
 PREREQUIS:
