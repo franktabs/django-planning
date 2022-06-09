@@ -7,7 +7,7 @@
 
 - api deployer en ligne à l'url:  https://server-planning.herokuapp.com
 
-Exemple de visualisation de l'api deployer: 
+Exemple de visualisation de l'api deployer qui fourni les différentes salles : 
 
          https://server-planning.herokuapp.com/api/salle
 
