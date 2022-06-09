@@ -42,3 +42,5 @@ _______________________________________________________
 
 
 Le serveur étant lancer on peut y acceder via le frontend de l'application
+
+NB: Le code de la BASE DE DONNEES se trouve dans le fichier sql planning-backend.sql du même repertoire que manage.py
