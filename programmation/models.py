@@ -211,16 +211,13 @@ class CoursProgramme(models.Model):
     plages = models.ForeignKey(
         Plage, on_delete=models.SET_NULL, null=True, blank=True)
     # programmer = models.PositiveSmallIntegerField(null=False, choices=isProg)
-    contrainte_cours_programme = models.ForeignObject(to=Enseigne, from_fields=['ues_id', 'enseignants_id', 'classes_id'], to_fields=['ues_id', 'enseignants_id', 'classes_id'], on_delete=models.CASCADE, unique=True),
+    
     
     def __str__(self):
         return f'{self.ues} {self.enseignants}'
 
     class Meta:
         db_table = 'cours_programmes'
-        constraints = [
-            models.UniqueConstraint(fields=['ues_id', 'enseignants_id', 'classes_id'], name='contrainte_cours_programme')
-        ]
         unique_together = (('salles_id', 'plages_id'), ('enseignants_id', 'plages_id'), ('ues_id', 'classes_id'))
         
 class CoursProgrammeWriteSerializer(serializers.ModelSerializer):

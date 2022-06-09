@@ -105,7 +105,7 @@ class Salle(models.Model):
     nom = models.CharField(max_length=45)
     etat_electricite = models.IntegerField(choices=electricite)
     capacite = models.IntegerField()
-    batiments = models.ForeignKey(Batiment, null=True,related_name='batiments', on_delete=models.SET_NULL,  blank=True)
+    batiments = models.ForeignKey(Batiment, null=True,on_delete=models.SET_NULL,  blank=True)
     type_salles = models.ForeignKey(TypeSalle, on_delete=models.CASCADE, null=False)
 
     class Meta:
