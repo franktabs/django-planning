@@ -1,5 +1,5 @@
 
-# BACKEND
+# BACKEND API
 
 -------------------------------------------------------
 GESTION DU PLANNING COTE BACHKEN
@@ -36,3 +36,5 @@ _______________________________________________________
 
          python manage.py runserver 0.0.0.0:8000 
 
+
+Le serveur étant lancer on peut y acceder via le frontend de l'application
