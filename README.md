@@ -1,6 +1,10 @@
 
 # BACKEND API
 
+depot github: 
+
+         https://github.com/franktabs/django-planning/settings
+
 -------------------------------------------------------
 GESTION DU PLANNING COTE BACHKEN
 _______________________________________________________
