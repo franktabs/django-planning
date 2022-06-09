@@ -381,7 +381,7 @@ def salle_libreView(req: HttpRequest):
 
     for salle in salles:
         cap = (float)(salle['capacite'])
-        if (eff - eff*0.1 <= cap and cap <= eff + eff/2):
+        if (eff - eff*0.2 <= cap and cap <= eff + eff/2):
             tab.append(
                 {
                     'id': salle['id'],
