@@ -1,12 +1,18 @@
 
 # BACKEND API
 
-depot github: 
+- depot github: 
 
          https://github.com/franktabs/django-planning/settings
 
+- api deployer en ligne à l'url:  https://server-planning.herokuapp.com
+
+Exemple de visualisation de l'api deployer: 
+
+         https://server-planning.herokuapp.com/api/salle
+
 -------------------------------------------------------
-GESTION DU PLANNING COTE BACHKEN
+GESTION DU PLANNING COTE BACKEND
 _______________________________________________________
 
 PREREQUIS:
