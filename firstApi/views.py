@@ -86,10 +86,22 @@ class EtudiantViewSet(UtilisateurViewSet):
     mymodel = Etudiant
     def create(self, req: HttpRequest, *args, **kwargs):
         return super().create(req, *args, **kwargs)
+    
+    def get_serializer_class(self):
+        if self.request.method=='POST' or self.request.method=='PUT':
+            return EtudiantWriteSerializer
+        else:
+            return EtudiantSerializer
 
 class RessourceViewSet(ModelViewSet):
     serializer_class = RessourceSerializer
     queryset = Ressource.objects.all()
+    
+    def get_serializer_class(self):
+        if self.request.method=='POST' or self.request.method=='PUT':
+            return RessourceWriteSerializer
+        else:
+            return RessourceSerializer
 
 class TypeRessourceViewSet(ModelViewSet):
     serializer_class = TypeRessourceSerializer
@@ -103,6 +115,13 @@ class BatimentViewSet(ModelViewSet):
     serializer_class = BatimentSerializer
     queryset = Batiment.objects.all()
     
+    def get_serializer_class(self):
+        if self.request.method=='POST' or self.request.method=='PUT':
+            return BatimentWriteSerializer
+        else:
+            return BatimentSerializer
+    
+    
 class TypeSalleViewSet(ModelViewSet):
     serializer_class = TypeSalleSerializer
     queryset = TypeSalle.objects.all()
@@ -113,6 +132,12 @@ class DepartementViewSet(ModelViewSet):
     serializer_class = DepartementSerializer
     queryset = Departement.objects.all()
     
+    def get_serializer_class(self):
+        if self.request.method=='POST' or self.request.method=='PUT':
+            return DepartementWriteSerializer
+        else:
+            return DepartementSerializer
+    
 class EnseignantViewSet(UtilisateurViewSet):
     serializer_class = EnseignantSerializer
     queryset = Enseignant.objects.all()
@@ -121,6 +146,11 @@ class EnseignantViewSet(UtilisateurViewSet):
     def create(self, req: HttpRequest, *args, **kwargs):
         return super().create(req, *args, **kwargs)
     
+    def get_serializer_class(self):
+        if self.request.method=='POST' or self.request.method=='PUT':
+            return EnseignantWriteSerializer
+        else:
+            return EnseignantSerializer
 
 @api_view(['POST'])
 def utilisateurView(req:HttpRequest):

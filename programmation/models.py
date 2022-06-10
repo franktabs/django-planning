@@ -158,17 +158,18 @@ class Ue(models.Model):
     def __str__(self):
         return self.code
 
-
 class UeSerializer(serializers.ModelSerializer):
-
-    enseignants = EnseignantSerializer(many=True)
-    classes = ClasseSerializer(many=True)
-    salles = SalleSerializer(many=True)
-    plages = PlageSerializer(many=True)
 
     class Meta:
         model = Ue
         fields = "__all__"
+        
+class UeWriteSerializer(UeSerializer):
+    
+    enseignants = EnseignantSerializer(many=True)
+    classes = ClasseSerializer(many=True)
+    salles = SalleSerializer(many=True)
+    plages = PlageSerializer(many=True)
 # _______________________________________________________________________
 
 

@@ -13,6 +13,12 @@ class UeViewSet(ModelViewSet):
     queryset = Ue.objects.all()
     query = "SELECT * FROM ues"
 
+    def get_serializer_class(self):
+        
+        if self.request.method=='POST' or self.request.method=='PUT':
+            return UeWriteSerializer
+        else:
+            return UeSerializer
 
 class ClasseGroupeViewSet(ModelViewSet):
     serializer_class = ClasseGroupeSerializer
