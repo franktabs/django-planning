@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'firstApi',
     'rest_framework',
     'programmation',
+    'noteManager',
     "corsheaders",
 ]
 
@@ -152,9 +153,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://127.0.0.1:9000",
     "http://localhost:3000",
+    "http://localhost:8001",
     "http://192.168.8.101:3000",
     "http://192.168.8.100:3000",
     "http://192.168.8.102:3000",
+    
 ]
 
 CORS_ALLOW_METHODS = [

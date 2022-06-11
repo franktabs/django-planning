@@ -127,6 +127,7 @@ class SalleWriteSerializer(serializers.ModelSerializer):
 class SalleSerializer(serializers.ModelSerializer):
     batiments = BatimentSerializer()
     type_salles = TypeSalleSerializer()
+    
     class Meta:
         model = Salle
         fields = '__all__'
@@ -183,15 +184,8 @@ class Enseignant(models.Model):
         return self.noms
 
 
-class EnseignantSerializer(serializers.ModelSerializer):
+class EnseignantWriteSerializer(serializers.ModelSerializer):
     
-    class Meta:
-        model = Enseignant
-        fields = "__all__"
-        
-class EnseignantWriteSerializer(EnseignantSerializer):
-    departements = DepartementSerializer(read_only=True)
-
     def validate_matricule(self, value):
         message = []
         erreur = False
@@ -211,12 +205,20 @@ class EnseignantWriteSerializer(EnseignantSerializer):
         if email:
             raise serializers.ValidationError('Sorry!! email already exists')
         return value
+    
+    class Meta:
+        model = Enseignant
+        fields = "__all__"
+        
+class EnseignantSerializer(EnseignantWriteSerializer):
+    departements = DepartementSerializer(read_only=True)
+
 # _____________________________________________________________________________________________
     
     
 # ____________________________________________________________________________________________
 class Etudiant(models.Model):
-    matricule = models.CharField(null=True, blank=True, max_length=45)
+    matricule = models.CharField(unique=True, null=True, blank=True, max_length=45)
     noms = models.CharField(max_length=255, null=False)
     adresse = models.CharField(null=True, blank=True, max_length=255)
     email = models.EmailField(null=False, unique=True, max_length=45)
@@ -226,15 +228,29 @@ class Etudiant(models.Model):
     
     class Meta:
         db_table = "etudiants"
+    
+    def __str__(self) -> str:
+        return  f" {self.noms.upper()}"
 
 
-class EtudiantSerializer(serializers.ModelSerializer):
-
+class EtudiantWriteSerializer(serializers.ModelSerializer):
+    
+    def validate_matricule(self, value):
+        if(len(value)<7 and len(value)>=1):
+            raise serializers.ValidationError('au-moins 7 caractères')
+        return value
+    
+    def validate_email(self, value):
+        email = Enseignant.objects.filter(email=value)
+        if email:
+            raise serializers.ValidationError('Sorry!! email already exists')
+        return value
+    
     class Meta:
         model = Etudiant
         fields = "__all__"
 
-class EtudiantWriteSerializer(EtudiantSerializer):
+class EtudiantSerializer(EtudiantWriteSerializer):
     classes = importClass().ClasseSerializer(read_only=True)
     
     def validate_matricule(self, value):
@@ -263,7 +279,6 @@ class TypeRessource(models.Model):
         return self.code
         
 class TypeRessourceSerializer(serializers.ModelSerializer):
-    classes = importClass().ClasseSerializer(read_only=True)
 
     class Meta:
         model = TypeRessource
@@ -285,13 +300,13 @@ class Ressource(models.Model):
     def __str__(self):
         return self.code
         
-class RessourceSerializer(serializers.ModelSerializer):
+class RessourceWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ressource
         fields = "__all__"
         
-class RessourceWriteSerializer(RessourceSerializer):
+class RessourceSerializer(RessourceWriteSerializer):
     type_ressources = TypeRessourceSerializer(read_only=True)
     facultes = FaculteSerializer(read_only=True)
 

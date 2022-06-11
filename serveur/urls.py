@@ -20,5 +20,6 @@ urlpatterns = [
     path("", helloView),
     path('admin/', admin.site.urls),
     path('api/', include('firstApi.urls')),
-    path('api/', include('programmation.urls'))
+    path('api/', include('programmation.urls')),
+    path('api/', include('noteManager.urls')),
 ]
