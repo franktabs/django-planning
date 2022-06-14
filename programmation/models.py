@@ -145,12 +145,12 @@ class Ue(models.Model):
 
     enseignants = models.ManyToManyField(
         Enseignant, through='CoursProgramme', related_name='ues')
-    classes = models.ManyToManyField(
-        Classe, through='CoursProgramme', related_name='ues')
-    salles = models.ManyToManyField(
-        Salle, through='CoursProgramme', related_name='ues')
-    plages = models.ManyToManyField(
-        'Plage', through='CoursProgramme', related_name='ues')
+    # classes = models.ManyToManyField(
+    #     Classe, through='CoursProgramme', related_name='ues')
+    # salles = models.ManyToManyField(
+    #     Salle, through='CoursProgramme', related_name='ues')
+    # plages = models.ManyToManyField(
+    #     'Plage', through='CoursProgramme', related_name='ues')
 
     class Meta:
         db_table = 'ues'
@@ -167,9 +167,9 @@ class UeWriteSerializer(serializers.ModelSerializer):
 class UeSerializer(UeWriteSerializer):
     
     enseignants = EnseignantSerializer(many=True)
-    classes = ClasseSerializer(many=True)
-    salles = SalleSerializer(many=True)
-    plages = PlageSerializer(many=True)
+    # classes = ClasseSerializer(many=True)
+    # salles = SalleSerializer(many=True)
+    # plages = PlageSerializer(many=True)
 # _______________________________________________________________________
 
 

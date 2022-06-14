@@ -5,13 +5,33 @@ from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from noteManager.models import *
 
+
+def afficheNote(valeur):
+    if(not valeur):
+        return "/"
+    elif(valeur < 0):
+        return "EL"
+    else:
+        return valeur
 # Create your views here.
 @api_view(['GET'])
 def etudiantNoteView(req:HttpRequest, id):
-    row= Evaluation.objects.raw("SELECT * FROM (SELECT * FROM evaluations WHERE etudiants_id=%s) AS evaluer INNER JOIN cours_programmes ON evaluer.ues_id=cours_programmes.ues_id INNER JOIN enseignants ON enseignants.id=cours_programmes.enseignants_id", [id])
+    row= Evaluation.objects.raw("SELECT evaluer.id, cc, tp, ee, cours_programmes.ues_id FROM (SELECT * FROM evaluations WHERE etudiants_id=%s) AS evaluer INNER JOIN cours_programmes ON evaluer.ues_id=cours_programmes.ues_id ", [id])
+    tab=[]
+    serializer = EvaluationSerializer(row, many=True)
     
-    print(f"\n\n {row}\n\n")
-    return Response(row)
+    
+    for i in serializer.data :
+        tab.append({
+            'cc': afficheNote(i["cc"]),
+            'tp': afficheNote(i["tp"]),
+            'ee': afficheNote(i['ee']),
+            'email': i["ues"]["enseignants"][0]["email"],
+            'module_code': i["ues"]["code"],
+        })
+    
+    print(f'\n{tab}\n')
+    return Response(tab)
 
 class EvaluationViewSet(ModelViewSet):
     serializer_class = EvaluationSerializer
